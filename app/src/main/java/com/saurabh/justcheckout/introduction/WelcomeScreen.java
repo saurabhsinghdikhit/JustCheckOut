@@ -5,16 +5,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Button;
 
+import com.saurabh.justcheckout.MainActivity;
 import com.saurabh.justcheckout.R;
 import com.saurabh.justcheckout.adapters.WelcomeScreenAdapter;
+import com.saurabh.justcheckout.authentication.AuthenticationActivity;
 import com.saurabh.justcheckout.classes.ViewPagerAdapter;
 
 import java.util.ArrayList;
 
 public class WelcomeScreen extends AppCompatActivity {
     ViewPager2 vPager;
+    Button welcomeBtn;
     private RecyclerView.Adapter welcomeScreenAdapter;
     ArrayList<String> imageList = new ArrayList<String>();
     @Override
@@ -25,7 +31,37 @@ public class WelcomeScreen extends AppCompatActivity {
         imageList.add("welcome2");
         imageList.add("welcome3");
         vPager = findViewById(R.id.welcome_view_pager);
+        welcomeBtn = findViewById(R.id.welcomeButton);
         welcomeScreenAdapter = new WelcomeScreenAdapter(imageList);
         vPager.setAdapter(welcomeScreenAdapter);
+        welcomeBtn.setOnClickListener(view -> {
+            if(vPager.getCurrentItem()>=2){
+                startActivity(new Intent(WelcomeScreen.this, AuthenticationActivity.class));
+                finish();
+            }else{
+                vPager.setCurrentItem(vPager.getCurrentItem() + 1);
+            }
+        });
+        vPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position<2){
+                    welcomeBtn.setText("Next");
+                }else{
+                    welcomeBtn.setText("Login");
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
+            }
+        });
     }
 }
