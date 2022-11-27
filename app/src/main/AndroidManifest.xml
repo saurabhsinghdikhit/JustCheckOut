@@ -14,29 +14,33 @@
         android:theme="@style/Theme.JustCheckOut"
         tools:targetApi="31">
         <activity
-            android:name=".CheckoutActivity"
-            android:exported="true" >
-
-        </activity>
-        <activity
-            android:name=".CartActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProductDetailsActivity"
+            android:name=".authentication.AuthenticationActivity"
             android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".WelcomeScreen"
-            android:exported="true" />
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".checkout.CheckoutActivity"
+            android:exported="true" />
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".introduction.WelcomeScreen"
+            android:exported="true" />
+        <activity
+            android:name=".introduction.SplashActivity"
+            android:exported="true">
+
         </activity>
         <activity
             android:name=".MainActivity"

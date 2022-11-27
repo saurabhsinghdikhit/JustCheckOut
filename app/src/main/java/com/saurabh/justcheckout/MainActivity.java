@@ -15,10 +15,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImageView cartBtn = findViewById(R.id.btn_main_cart);
-        cartBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,CartActivity.class));
-            }
+        cartBtn.setOnClickListener(view ->  {
+            startActivity(new Intent(MainActivity.this,CartActivity.class));
         });
     }
 }

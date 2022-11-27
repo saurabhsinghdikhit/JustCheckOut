@@ -1,11 +1,14 @@
-package com.saurabh.justcheckout;
+package com.saurabh.justcheckout.checkout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.widget.TextView;
+
+import com.saurabh.justcheckout.R;
 
 public class CheckoutActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

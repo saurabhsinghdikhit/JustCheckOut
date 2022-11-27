@@ -5,7 +5,7 @@
     android:padding="25dp"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".CheckoutActivity">
+    tools:context=".checkout.CheckoutActivity">
     <FrameLayout
         android:layout_marginTop="5dp"
         android:orientation="horizontal"
@@ -15,12 +15,14 @@
             android:layout_gravity="left|center"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:src="@drawable/ic_backward"/>
+            android:src="@drawable/ic_backward"
+            android:contentDescription="TODO" />
         <ImageView
             android:layout_gravity="right|center"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_dots"/>
+            android:src="@drawable/ic_dots"
+            android:contentDescription="TODO" />
     </FrameLayout>
     <FrameLayout
         android:id="@+id/checkoutFrameLayout"
