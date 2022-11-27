@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.saurabh.justcheckout">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,28 +14,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.JustCheckOut"
+        android:usesCleartextTraffic="true"
         tools:targetApi="25">
         <activity
-            android:name=".authentication.AuthenticationActivity"
+            android:name=".admin.CreateProductActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".user.authentication.AuthenticationActivity"
             android:exported="true">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".checkout.CheckoutActivity"
+            android:name=".user.checkout.CheckoutActivity"
             android:exported="true" />
         <activity
-            android:name=".CartActivity"
+            android:name=".user.CartActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductDetailsActivity"
+            android:name=".user.ProductDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".introduction.WelcomeScreen"
+            android:name=".user.introduction.WelcomeScreen"
             android:exported="true" />
         <activity
-            android:name=".introduction.SplashActivity"
+            android:name=".user.introduction.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,8 +52,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:exported="true" />
+            android:name=".user.home.MainActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.saurabh.justcheckout.checkout;
+package com.saurabh.justcheckout.user.checkout;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.saurabh.justcheckout.CartActivity;
+import com.saurabh.justcheckout.user.CartActivity;
 import com.saurabh.justcheckout.R;
 
 public class CheckoutScreenFragment extends Fragment {

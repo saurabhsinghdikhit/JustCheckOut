@@ -1,16 +1,15 @@
-package com.saurabh.justcheckout.introduction;
+package com.saurabh.justcheckout.user.introduction;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 
-import com.saurabh.justcheckout.MainActivity;
+import com.saurabh.justcheckout.admin.CreateProductActivity;
+import com.saurabh.justcheckout.user.home.MainActivity;
 import com.saurabh.justcheckout.R;
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,11 +21,16 @@ public class SplashActivity extends AppCompatActivity {
         SharedPreferences userData = this.getSharedPreferences("userLogin", MODE_PRIVATE);
         if(userData!=null){
             String name = userData.getString("name", "");
+            String userType = userData.getString("userType","");
             if(name.equalsIgnoreCase(""))
             {
-                setActivity(new WelcomeScreen());
+                 setActivity(new WelcomeScreen());
+
             }else{
-                setActivity(new MainActivity());
+                if(userType.equals("admin"))
+                    setActivity(new CreateProductActivity());
+                else
+                    setActivity(new MainActivity());
             }
         }else{
             setActivity(new WelcomeScreen());

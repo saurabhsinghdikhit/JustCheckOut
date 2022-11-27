@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".user.home.MainActivity">
     <FrameLayout
         android:padding="10dp"
         android:layout_width="match_parent"
@@ -108,52 +107,13 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:text="Top pics"/>
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/home_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <androidx.cardview.widget.CardView
-            android:id="@+id/roundCardView"
-            android:layout_width="wrap_content"
-            android:layout_height="300dp"
-            android:layout_centerHorizontal="true"
-            android:elevation="0dp"
-            app:cardCornerRadius="20dp">
-            <ImageView
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                android:cropToPadding="true"
-                android:src="@drawable/crop_top"
-                android:adjustViewBounds="true"
-                android:contentDescription="TODO" />
-        </androidx.cardview.widget.CardView>
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:textColor="@color/black"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="@string/white_crop_top"/>
-            <TextView
-                android:gravity="left|center"
-                android:drawablePadding="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:textColor="@color/black"
-                android:drawableTint="@color/orange"
-                android:drawableLeft="@drawable/dollar"
-                android:text="@string/crop_top_price"/>
-        </LinearLayout>
-    </LinearLayout>
+        android:paddingStart="80dp"
+        android:paddingEnd="80dp"
+        android:layout_height="400dp"
+        android:layout_marginBottom="50dp"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,24 +1,20 @@
-package com.saurabh.justcheckout.introduction;
+package com.saurabh.justcheckout.user.introduction;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.saurabh.justcheckout.MainActivity;
 import com.saurabh.justcheckout.R;
-import com.saurabh.justcheckout.adapters.WelcomeScreenAdapter;
-import com.saurabh.justcheckout.authentication.AuthenticationActivity;
-import com.saurabh.justcheckout.classes.ViewPagerAdapter;
+import com.saurabh.justcheckout.user.adapters.WelcomeScreenAdapter;
+import com.saurabh.justcheckout.user.authentication.AuthenticationActivity;
 
 import java.util.ArrayList;
 

@@ -1,8 +1,10 @@
-package com.saurabh.justcheckout;
+package com.saurabh.justcheckout.user;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.saurabh.justcheckout.R;
 
 public class ProductDetailsActivity extends AppCompatActivity {
 

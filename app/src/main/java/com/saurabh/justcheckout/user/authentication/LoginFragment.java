@@ -1,4 +1,4 @@
-package com.saurabh.justcheckout.authentication;
+package com.saurabh.justcheckout.user.authentication;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +17,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +24,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.saurabh.justcheckout.MainActivity;
+import com.saurabh.justcheckout.admin.CreateProductActivity;
+import com.saurabh.justcheckout.user.home.MainActivity;
 import com.saurabh.justcheckout.R;
-import com.saurabh.justcheckout.classes.User;
+import com.saurabh.justcheckout.user.classes.User;
 
 import java.util.regex.Pattern;
 
@@ -120,7 +116,10 @@ public class LoginFragment extends Fragment {
                                 myUser.putString("email", user.getEmail());
                                 myUser.putString("userType", user.getUserType());
                                 myUser.apply();
-                                activity.startActivity(new Intent(activity,MainActivity.class));
+                                if(user.getUserType().equals("admin"))
+                                    activity.startActivity(new Intent(activity,CreateProductActivity.class));
+                                else
+                                    activity.startActivity(new Intent(activity,MainActivity.class));
                                 activity.finish();
                             }
 

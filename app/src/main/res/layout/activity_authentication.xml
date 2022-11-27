@@ -6,14 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#36AED1"
-    tools:context=".authentication.AuthenticationActivity">
+    tools:context=".user.authentication.AuthenticationActivity">
     <ScrollView
         android:scrollbars="none"
         android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

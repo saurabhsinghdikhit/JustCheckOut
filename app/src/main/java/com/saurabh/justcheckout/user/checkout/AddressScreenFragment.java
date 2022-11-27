@@ -1,4 +1,4 @@
-package com.saurabh.justcheckout.checkout;
+package com.saurabh.justcheckout.user.checkout;
 
 import android.os.Bundle;
 

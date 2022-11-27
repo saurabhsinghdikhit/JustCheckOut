@@ -1,4 +1,4 @@
-package com.saurabh.justcheckout.classes;
+package com.saurabh.justcheckout.user.classes;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

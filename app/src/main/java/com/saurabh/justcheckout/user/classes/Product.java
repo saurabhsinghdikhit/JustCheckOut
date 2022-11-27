@@ -1,15 +1,15 @@
-package com.saurabh.justcheckout.classes;
+package com.saurabh.justcheckout.user.classes;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Product {
-    String id,name,description,price,weight,material,quantity,size;
+    String id,name,description,price,weight,material,quantity,size,imageUrl;
     public Product() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public Product(String id, String name, String description, String price, String weight, String material, String quantity, String size) {
+    public Product(String id, String name, String description, String price, String weight, String material, String quantity, String size,String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -18,6 +18,15 @@ public class Product {
         this.material = material;
         this.quantity = quantity;
         this.size = size;
+        this.imageUrl = imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public void setId(String id) {

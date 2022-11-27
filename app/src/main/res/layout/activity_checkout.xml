@@ -5,7 +5,7 @@
     android:padding="25dp"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".checkout.CheckoutActivity">
+    tools:context=".user.checkout.CheckoutActivity">
     <FrameLayout
         android:layout_marginTop="5dp"
         android:orientation="horizontal"

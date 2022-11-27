@@ -1,10 +1,9 @@
-package com.saurabh.justcheckout.authentication;
+package com.saurabh.justcheckout.user.authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.saurabh.justcheckout.R;

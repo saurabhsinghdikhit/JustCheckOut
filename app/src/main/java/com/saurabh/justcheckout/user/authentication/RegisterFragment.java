@@ -1,4 +1,4 @@
-package com.saurabh.justcheckout.authentication;
+package com.saurabh.justcheckout.user.authentication;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -16,13 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -30,16 +25,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.saurabh.justcheckout.MainActivity;
+import com.saurabh.justcheckout.user.home.MainActivity;
 import com.saurabh.justcheckout.R;
-import com.saurabh.justcheckout.classes.User;
-import com.saurabh.justcheckout.introduction.SplashActivity;
+import com.saurabh.justcheckout.user.classes.User;
 
 import java.util.Objects;
-import java.util.concurrent.Executor;
 import java.util.regex.Pattern;
-
-import kotlin.text.Regex;
 
 public class RegisterFragment extends Fragment {
     String email = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";

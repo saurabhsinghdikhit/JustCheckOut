@@ -5,7 +5,7 @@
     android:padding="10dp"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".introduction.WelcomeScreen">
+    tools:context=".user.introduction.WelcomeScreen">
 
     <androidx.viewpager2.widget.ViewPager2
         android:layout_marginTop="50dp"
