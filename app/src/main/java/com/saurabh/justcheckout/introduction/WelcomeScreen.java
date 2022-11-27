@@ -1,13 +1,17 @@
 package com.saurabh.justcheckout.introduction;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 
 import com.saurabh.justcheckout.MainActivity;
@@ -34,6 +38,21 @@ public class WelcomeScreen extends AppCompatActivity {
         welcomeBtn = findViewById(R.id.welcomeButton);
         welcomeScreenAdapter = new WelcomeScreenAdapter(imageList);
         vPager.setAdapter(welcomeScreenAdapter);
+        // setting animation for viewing viewpager as motion layout
+        vPager.setClipToPadding(false);
+        vPager.setClipChildren(false);
+        vPager.setOffscreenPageLimit(3);
+        vPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
+        CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
+        compositePageTransformer.addTransformer(new MarginPageTransformer(40));
+        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
+            @Override
+            public void transformPage(@NonNull View page, float position) {
+                float r = 1-Math.abs(position);
+                page.setScaleY(0.85f+r*0.15f);
+            }
+        });
+        vPager.setPageTransformer(compositePageTransformer);
         welcomeBtn.setOnClickListener(view -> {
             if(vPager.getCurrentItem()>=2){
                 startActivity(new Intent(WelcomeScreen.this, AuthenticationActivity.class));

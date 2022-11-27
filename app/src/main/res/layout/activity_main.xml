@@ -49,6 +49,7 @@
         android:gravity="center"
         android:layout_height="wrap_content">
         <RadioButton
+            android:id="@+id/radioAll"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
@@ -60,6 +61,7 @@
             android:textColor="@color/radio_button_text_color"
             android:text="@string/all"/>
         <RadioButton
+            android:id="@+id/radioMen"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
@@ -72,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="@string/men"/>
         <RadioButton
-            android:checked="true"
+            android:id="@+id/radioWomen"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
@@ -85,6 +87,7 @@
             android:layout_height="wrap_content"
             android:text="@string/women"/>
         <RadioButton
+            android:id="@+id/radioWinter"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
             android:paddingLeft="20dp"
