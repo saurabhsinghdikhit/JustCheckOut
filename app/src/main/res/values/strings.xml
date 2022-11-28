@@ -44,6 +44,7 @@
     <string name="master_card_no">**** **** **** 0123</string>
     <string name="my_cart">My cart</string>
     <string name="place_order">Place Order</string>
+    <string name="pin_text">This will make you product appear in top pick item in main screen</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

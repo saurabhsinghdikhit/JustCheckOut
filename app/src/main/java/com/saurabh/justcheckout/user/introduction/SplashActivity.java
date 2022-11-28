@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.saurabh.justcheckout.admin.CreateProductActivity;
+import com.saurabh.justcheckout.admin.ProductListActivity;
 import com.saurabh.justcheckout.user.home.MainActivity;
 import com.saurabh.justcheckout.R;
 
@@ -28,7 +29,7 @@ public class SplashActivity extends AppCompatActivity {
 
             }else{
                 if(userType.equals("admin"))
-                    setActivity(new CreateProductActivity());
+                    setActivity(new ProductListActivity());
                 else
                     setActivity(new MainActivity());
             }

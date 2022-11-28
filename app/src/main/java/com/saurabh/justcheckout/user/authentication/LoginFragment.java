@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.saurabh.justcheckout.admin.CreateProductActivity;
+import com.saurabh.justcheckout.admin.ProductListActivity;
 import com.saurabh.justcheckout.user.home.MainActivity;
 import com.saurabh.justcheckout.R;
 import com.saurabh.justcheckout.user.classes.User;
@@ -117,7 +118,7 @@ public class LoginFragment extends Fragment {
                                 myUser.putString("userType", user.getUserType());
                                 myUser.apply();
                                 if(user.getUserType().equals("admin"))
-                                    activity.startActivity(new Intent(activity,CreateProductActivity.class));
+                                    activity.startActivity(new Intent(activity, ProductListActivity.class));
                                 else
                                     activity.startActivity(new Intent(activity,MainActivity.class));
                                 activity.finish();
