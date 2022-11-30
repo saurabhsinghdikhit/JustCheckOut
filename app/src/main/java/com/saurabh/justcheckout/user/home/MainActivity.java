@@ -1,57 +1,161 @@
 package com.saurabh.justcheckout.user.home;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.saurabh.justcheckout.admin.ProductListActivity;
 import com.saurabh.justcheckout.user.CartActivity;
 import com.saurabh.justcheckout.R;
+import com.saurabh.justcheckout.user.adapters.AllProductsAdapter;
+import com.saurabh.justcheckout.user.adapters.MostPopularItemAdapter;
 import com.saurabh.justcheckout.user.adapters.TopItemAdapter;
 import com.saurabh.justcheckout.user.authentication.AuthenticationActivity;
 import com.saurabh.justcheckout.user.classes.Product;
+import com.saurabh.justcheckout.user.introduction.WelcomeScreen;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    RadioButton radioAll;
+    RadioButton homeRadio;
     ViewPager2 vPager;
     private RecyclerView.Adapter topItemAdapter;
-    ArrayList<String> imageList = new ArrayList<String>();
+    RecyclerView recyclerView;
+    RecyclerView.Adapter mAdapter;
+    RecyclerView.LayoutManager layoutManager;
+    ArrayList<Product> mostProductList = new ArrayList<>();
+    RecyclerView allProductRecycler;
+    RecyclerView.Adapter allProductAdapter;
+    RecyclerView.LayoutManager allProductlayoutManager;
+    ArrayList<Product> allProductList = new ArrayList<>();
+    ArrayList<Product> productList = new ArrayList<>();
+    ActionBarDrawerToggle actionBarDrawerToggle;
+    DrawerLayout drawerLayout;
+    CardView content;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         validateUser();
+        // for most popular recyclerview
+        recyclerView = findViewById(R.id.most_popular_recycler_view);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        // for all product list recycler view
+        allProductRecycler = findViewById(R.id.all_products);
+        allProductlayoutManager = new LinearLayoutManager(this);
+        allProductRecycler.setLayoutManager(allProductlayoutManager);
         ImageView cartBtn = findViewById(R.id.btn_main_cart);
-        radioAll = findViewById(R.id.radioAll);
-        radioAll.setChecked(true);
-        cartBtn.setOnClickListener(view ->  {
+        homeRadio = findViewById(R.id.radio_home);
+        homeRadio.setChecked(true);
+        cartBtn.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, CartActivity.class));
         });
         fetchPopularItem();
+        fetchMostPopularItems();
+        drawerLayout();
+    }
+
+    private void drawerLayout(){
+        drawerLayout = findViewById(R.id.drawerLayout);
+        content = findViewById(R.id.content);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close) {
+            float scaleFactor = 5f;
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                float slideX = drawerView.getWidth() * slideOffset;
+                content.setTranslationX(slideX);
+                content.setScaleX( 1 - slideOffset / scaleFactor);
+                content.setScaleY(1 - slideOffset / scaleFactor);
+                content.setCardElevation(100f);
+                content.setRadius(60f);
+            }
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                content.setCardElevation(0f);
+                content.setRadius(0f);
+            }
+        };
+        drawerLayout.setScrimColor(Color.TRANSPARENT);
+        drawerLayout.setDrawerElevation(0f);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        findViewById(R.id.menu_icon).setOnClickListener(l -> {
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
+        ((RadioButton)findViewById(R.id.radio_cart)).setOnClickListener(click->{
+            startActivity(new Intent(MainActivity.this,CartActivity.class));
+            drawerLayout.close();
+        });
+        ((RadioButton)findViewById(R.id.radio_logout)).setOnClickListener(click->{
+            FirebaseAuth.getInstance().signOut();
+            SharedPreferences sharedPreferences = getSharedPreferences("install", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("name", "");
+            editor.apply();
+            finishAffinity();
+            startActivity(new Intent(MainActivity.this,AuthenticationActivity.class));
+            drawerLayout.close();
+        });
+    }
+
+    private void fetchMostPopularItems() {
+        FirebaseDatabase.getInstance().getReference("products")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        mostProductList.clear();
+                        allProductList.clear();
+                        for (DataSnapshot childNode : snapshot.getChildren()) {
+                            mostProductList.add(childNode.getValue(Product.class));
+                            allProductList.add(childNode.getValue(Product.class));
+                        }
+                        // most popular
+                        mAdapter = new MostPopularItemAdapter(mostProductList);
+                        recyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
+                        // all product
+                        allProductAdapter = new AllProductsAdapter(allProductList);
+                        allProductRecycler.setAdapter(allProductAdapter);
+                        allProductAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void fetchPopularItem() {
-        ArrayList<Product> productList = new ArrayList<>();
-        productList.add(new Product("1212","White","SBC","21","22gm","cotton","12","S,M,L","welcome1"));
-        productList.add(new Product("1212","Black","SBC","21","22gm","cotton","12","S,M,L","welcome2"));
-        productList.add(new Product("1212","Red","SBC","21","22gm","cotton","12","S,M,L","welcome3"));
-        productList.add(new Product("1212","Pink","SBC","21","22gm","cotton","12","S,M,L","welcome1"));
         vPager = findViewById(R.id.home_view_pager);
-        topItemAdapter = new TopItemAdapter(productList);
-        vPager.setAdapter(topItemAdapter);
-        // setting animation for viewing viewpager as motion layout
         vPager.setClipToPadding(false);
         vPager.setClipChildren(false);
         vPager.setOffscreenPageLimit(3);
@@ -66,17 +170,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         vPager.setPageTransformer(compositePageTransformer);
-//        FirebaseDatabase.getInstance().getReference("products")
-//                .addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                    }
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//                        Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
-//                    }
-//                });
+        FirebaseDatabase.getInstance().getReference("products").orderByChild("topPic").equalTo(true)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        productList.clear();
+                        for (DataSnapshot childNode : snapshot.getChildren()) {
+                            productList.add(childNode.getValue(com.saurabh.justcheckout.user.classes.Product.class));
+                        }
+                        topItemAdapter = new TopItemAdapter(productList);
+                        vPager.setAdapter(topItemAdapter);
+                        topItemAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void validateUser() {
@@ -84,6 +195,30 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser == null){
             startActivity(new Intent(this, AuthenticationActivity.class));
             finish();
+        }else{
+            SharedPreferences userData = this.getSharedPreferences("userLogin", MODE_PRIVATE);
+            if(userData!=null){
+                String name = userData.getString("name", "");
+                String userType = userData.getString("userType","");
+                if(name.equalsIgnoreCase(""))
+                {
+                    startActivity(new Intent(this, AuthenticationActivity.class));
+                    finish();
+
+                }else{
+                    ((TextView)findViewById(R.id.profileName)).setText("Welcome\n"+name);
+                }
+            }else{
+                startActivity(new Intent(this, AuthenticationActivity.class));
+                finish();
+            }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        homeRadio = findViewById(R.id.radio_home);
+        homeRadio.setChecked(true);
     }
 }

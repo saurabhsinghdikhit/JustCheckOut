@@ -89,32 +89,32 @@ public class RegisterFragment extends Fragment {
             registerEmail.setError("Email is required");
             return;
         }
+        if(!emailPattern.matcher(registerEmail.getText()).matches()){
+            registerEmail.setError("Email is not valid");
+            return;
+        }
         if(TextUtils.isEmpty(registerMobile.getText())){
             registerMobile.setError("Mobile is required");
+            return;
+        }
+        if(!mobilePattern.matcher(registerMobile.getText()).matches()){
+            registerMobile.setError("Mobile is not valid");
             return;
         }
         if(TextUtils.isEmpty(registerPassword.getText())){
             registerPassword.setError("Password is required");
             return;
         }
-        if(TextUtils.isEmpty(registerConfirmPassword.getText())){
-            registerConfirmPassword.setError("Confirm password is required");
-            return;
-        }
         if(registerPassword.getText().length()<6){
             registerPassword.setError("Password should be least 6 characters");
             return;
         }
+        if(TextUtils.isEmpty(registerConfirmPassword.getText())){
+            registerConfirmPassword.setError("Confirm password is required");
+            return;
+        }
         if(!registerPassword.getText().toString().equals(registerConfirmPassword.getText().toString())){
             registerConfirmPassword.setError("Password is not matching");
-            return;
-        }
-        if(!emailPattern.matcher(registerEmail.getText()).matches()){
-            registerEmail.setError("Email is not valid");
-            return;
-        }
-        if(!mobilePattern.matcher(registerMobile.getText()).matches()){
-            registerMobile.setError("Mobile is not valid");
             return;
         }
         // if every this is clear then call the register method

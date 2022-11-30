@@ -22,7 +22,9 @@ import com.saurabh.justcheckout.admin.classes.Product;
 import com.saurabh.justcheckout.admin.classes.ProductListAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -39,34 +41,22 @@ public class ProductListActivity extends AppCompatActivity {
         add_product = findViewById(R.id.add_product);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        mAdapter = new ProductListAdapter(productList);
-        recyclerView.setAdapter(mAdapter);
         adminProductListProgressBar.setVisibility(View.VISIBLE);
         add_product.setOnClickListener(View ->{
             startActivity(new Intent(this,CreateProductActivity.class));
         });
         FirebaseDatabase.getInstance().getReference("products")
-                .addChildEventListener(new ChildEventListener() {
+                .addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        productList.clear();
                         adminProductListProgressBar.setVisibility(View.GONE);
-                        productList.add(snapshot.getValue(Product.class));
+                        for (DataSnapshot childNode : snapshot.getChildren()) {
+                            productList.add(childNode.getValue(Product.class));
+                        }
+                        mAdapter = new ProductListAdapter(productList);
+                        recyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
                     }
 
                     @Override

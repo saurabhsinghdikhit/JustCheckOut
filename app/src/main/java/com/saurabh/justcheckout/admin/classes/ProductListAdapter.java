@@ -11,9 +11,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
 import com.saurabh.justcheckout.R;
 import com.saurabh.justcheckout.admin.CreateProductActivity;
 
@@ -21,6 +25,7 @@ import java.util.ArrayList;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.MyViewHolder>{
     private final ArrayList<com.saurabh.justcheckout.admin.classes.Product> products;
+    AlertDialog.Builder builder;
     public ProductListAdapter(ArrayList<Product> products) {
         this.products = products;
     }
@@ -34,20 +39,55 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ProductListAdapter.MyViewHolder holder, int position) {
+
         String image = products.get(position).getImageUrl();
         Context actContext = holder.itemView.getContext();
-        //int imageId = actContext.getResources().getIdentifier(image, "drawable", actContext.getPackageName());
-        //holder.imgPic.setImageResource(imageId);
+        builder = new AlertDialog.Builder(actContext);
+        FirebaseStorage.getInstance().getReference()
+                .child("products/"+image).getDownloadUrl()
+                .addOnSuccessListener(uri -> {
+                    Glide.with(actContext).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(holder.imgPic);
+                }).addOnFailureListener(e->{
+                    Toast.makeText(actContext,"Image error",Toast.LENGTH_SHORT).show();
+                });
         holder.name.setText(products.get(position).getName().toUpperCase());
         holder.size.setText(products.get(position).getSize());
+        holder.product_list_price.setText(products.get(position).getPrice().toString());
+        if (products.get(position).getTopPic())
+            holder.pinned_item.setImageDrawable(actContext.getDrawable(R.drawable.ic_pin));
+        else
+            holder.pinned_item.setImageDrawable(actContext.getDrawable(R.drawable.ic_pin_light));
         holder.pinned_item.setOnClickListener(view -> {
-            Log.i("pinned","pim");
+            String message =!products.get(position).getTopPic()?"This product will be shown in top pics section"
+                    :"This product will be removed from top pic section";
+            FirebaseDatabase.getInstance().getReference("products")
+                    .child(products.get(position).getId()).child("topPic").setValue(!products.get(position).getTopPic())
+                    .addOnSuccessListener(l->{
+                        Toast.makeText(actContext,message,Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(e->{
+                        Toast.makeText(actContext,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    });
         });
         holder.deleteItem.setOnClickListener(view -> {
-            Log.i("delete","delete");
+            builder.setTitle("Do you want to remove this product?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes",(dialogInterface, i) -> {
+                        FirebaseDatabase.getInstance().getReference("products")
+                                .child(products.get(position).getId()).removeValue()
+                                .addOnSuccessListener(l->{
+                                    Toast.makeText(actContext,"Product has been deleted",Toast.LENGTH_SHORT).show();
+                                }).addOnFailureListener(e->{
+                                    Toast.makeText(actContext,e.getMessage(),Toast.LENGTH_SHORT).show();
+                                });
+                    }).setNegativeButton("No",(dialogInterface, i) -> {
+                        dialogInterface.cancel();
+                    });
+            builder.create().show();
         });
         holder.admin_list_item.setOnClickListener(view -> {
-            actContext.startActivity(new Intent(actContext, CreateProductActivity.class));
+            Intent intent = new Intent(actContext, CreateProductActivity.class);
+            intent.putExtra("productId", products.get(position).getId());
+            actContext.startActivity(intent);
         });
     }
 
@@ -58,13 +98,14 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imgPic,pinned_item,deleteItem;
-        TextView name,size;
+        TextView name,size,product_list_price;
         CardView admin_list_item;
         public MyViewHolder(LayoutInflater inflater, ViewGroup parent){
             super(inflater.inflate(R.layout.admin_product_list_item, parent, false));
             imgPic = itemView.findViewById(R.id.admin_product_list_image);
             name = itemView.findViewById(R.id.admin_product_list_name);
             size = itemView.findViewById(R.id.admin_product_list_size);
+            product_list_price = itemView.findViewById(R.id.product_list_price);
             pinned_item = itemView.findViewById(R.id.pinned_item);
             deleteItem = itemView.findViewById(R.id.delete_item);
             admin_list_item = itemView.findViewById(R.id.admin_list_item);

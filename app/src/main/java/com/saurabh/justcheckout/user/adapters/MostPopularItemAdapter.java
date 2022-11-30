@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,22 +22,22 @@ import com.saurabh.justcheckout.user.classes.Product;
 
 import java.util.ArrayList;
 
-public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.MyViewHolder>{
+public class MostPopularItemAdapter extends RecyclerView.Adapter<MostPopularItemAdapter.MyViewHolder>{
     private ArrayList<Product> products;
 
-    public TopItemAdapter(ArrayList<Product> products) {
+    public MostPopularItemAdapter(ArrayList<Product> products) {
         this.products = products;
     }
 
     @NonNull
     @Override
-    public TopItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MostPopularItemAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        return new TopItemAdapter.MyViewHolder(layoutInflater, parent);
+        return new MostPopularItemAdapter.MyViewHolder(layoutInflater, parent);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopItemAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MostPopularItemAdapter.MyViewHolder holder, int position) {
         String image = products.get(position).getImageUrl();
         Context actContext = holder.itemView.getContext();
         FirebaseStorage.getInstance().getReference()
@@ -47,7 +49,7 @@ public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.MyViewHo
                 });
         holder.name.setText(products.get(position).getName());
         holder.price.setText(products.get(position).getPrice().toString());
-        holder.roundCardView.setOnClickListener(view -> {
+        holder.mostPopularLayout.setOnClickListener(view -> {
             Intent intent = new Intent(actContext, ProductDetailsActivity.class);
             intent.putExtra("productId", products.get(position).getId());
             actContext.startActivity(intent);
@@ -62,13 +64,13 @@ public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.MyViewHo
     class MyViewHolder extends RecyclerView.ViewHolder {
         ImageView imgPic;
         TextView name,price;
-        CardView roundCardView;
+        CardView mostPopularLayout;
         public MyViewHolder(LayoutInflater inflater, ViewGroup parent){
-            super(inflater.inflate(R.layout.home_screen_view_pager_layout, parent, false));
-            imgPic = itemView.findViewById(R.id.topPickImage);
-            name = itemView.findViewById(R.id.topPickName);
-            price = itemView.findViewById(R.id.topPickPrice);
-            roundCardView = itemView.findViewById(R.id.roundCardView);
+            super(inflater.inflate(R.layout.most_popular_items, parent, false));
+            imgPic = itemView.findViewById(R.id.most_popular_image);
+            name = itemView.findViewById(R.id.most_popular_name);
+            price = itemView.findViewById(R.id.most_popular_price);
+            mostPopularLayout = itemView.findViewById(R.id.most_popular_layout);
         }
     }
 }

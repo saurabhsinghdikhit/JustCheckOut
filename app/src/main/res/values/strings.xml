@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">Just Check Out</string>
     <string name="find_your_style">Find your style</string>
-    <string name="all">All</string>
-    <string name="men">Men</string>
-    <string name="women">Women</string>
-    <string name="winter">Winter</string>
+    <string name="all">Home</string>
+    <string name="men">Home</string>
+    <string name="women">My Cart</string>
+    <string name="winter">Logout</string>
     <string name="tops">Tops</string>
     <string name="tees">T-Shirts</string>
     <string name="hoodies">Hoodies</string>
@@ -37,7 +37,7 @@
     <string name="total_amount">128.93</string>
     <string name="checkout">Checkout</string>
     <string name="delivery_address">Delivery Address</string>
-    <string name="address">1811- 435 Wilson Ave</string>
+    <string name="address">1811– 435 Wilson Ave</string>
     <string name="city">Kitchener,ON (Canada)</string>
     <string name="payment_methods">Payment Method</string>
     <string name="master_card">Master card</string>
@@ -45,6 +45,29 @@
     <string name="my_cart">My cart</string>
     <string name="place_order">Place Order</string>
     <string name="pin_text">This will make you product appear in top pick item in main screen</string>
+    <string name="name">Product Name</string>
+    <string name="description">Product description</string>
+    <string name="weight">Product Weight</string>
+    <string name="material">Product Material</string>
+    <string name="Size">Product Size</string>
+    <string name="product_quantity">Product Quantity</string>
+    <string name="price">Product Price</string>
+    <string name="add_product">Add Product</string>
+    <string name="edit_product">Edit Product</string>
+    <string name="all_products">All Products</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
+    <string-array name="weight_measure">
+        <item>grams</item>
+        <item>lbs</item>
+        <item>kgs</item>
+    </string-array>
+    <string-array name="category">
+        <item>Women</item>
+        <item>Men</item>
+        <item>Child</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

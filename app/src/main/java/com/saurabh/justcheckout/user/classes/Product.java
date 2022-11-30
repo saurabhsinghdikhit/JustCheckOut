@@ -4,12 +4,19 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Product {
-    String id,name,description,price,weight,material,quantity,size,imageUrl;
+    String id,name,description,weight,material,size,imageUrl,category;
+    Double price;
+    int quantity;
+    boolean topPic;
     public Product() {
-        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+        // Default constructor required for calls to DataSnapshot.getValue(Product.class)
     }
 
-    public Product(String id, String name, String description, String price, String weight, String material, String quantity, String size,String imageUrl) {
+    public void setTopPic(boolean topPic) {
+        this.topPic = topPic;
+    }
+
+    public Product(String id, String name, String description, Double price, String weight, String material, String category, int quantity, String size, String imageUrl, boolean topPic) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -19,6 +26,12 @@ public class Product {
         this.quantity = quantity;
         this.size = size;
         this.imageUrl = imageUrl;
+        this.category = category;
+        this.topPic = topPic;
+    }
+
+    public boolean getTopPic() {
+        return topPic;
     }
 
     public void setImageUrl(String imageUrl) {
@@ -41,7 +54,7 @@ public class Product {
         this.description = description;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -53,7 +66,7 @@ public class Product {
         this.material = material;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -69,11 +82,19 @@ public class Product {
         return name;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -85,7 +106,7 @@ public class Product {
         return material;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
