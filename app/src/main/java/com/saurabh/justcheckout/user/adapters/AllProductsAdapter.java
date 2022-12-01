@@ -27,8 +27,10 @@ import java.util.ArrayList;
 
 public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.MyViewHolder>{
     private final ArrayList<Product> products;
-    public AllProductsAdapter(ArrayList<Product> products) {
+    private IAllProductClickInterface iAllProductClickInterface;
+    public AllProductsAdapter(ArrayList<Product> products,IAllProductClickInterface iAllProductClickInterface) {
         this.products = products;
+        this.iAllProductClickInterface = iAllProductClickInterface;
     }
 
     @NonNull
@@ -58,6 +60,9 @@ public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.
             intent.putExtra("productId", products.get(position).getId());
             actContext.startActivity(intent);
         });
+        holder.allProductCart.setOnClickListener(click->{
+            iAllProductClickInterface.allProductItemClick(position);
+        });
     }
 
     @Override
@@ -66,16 +71,21 @@ public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgPic;
-        TextView name,size,product_list_price;
+        ImageView imgPic, allProductCart;
+        TextView name, size, product_list_price;
         CardView all_product_list_item;
-        public MyViewHolder(LayoutInflater inflater, ViewGroup parent){
+
+        public MyViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.all_products_item, parent, false));
             imgPic = itemView.findViewById(R.id.all_product_image);
             name = itemView.findViewById(R.id.all_product_name);
             size = itemView.findViewById(R.id.all_product_sizes);
             product_list_price = itemView.findViewById(R.id.all_product_price);
             all_product_list_item = itemView.findViewById(R.id.all_product_list_item);
+            allProductCart = itemView.findViewById(R.id.all_product_cart);
         }
     }
+    public interface IAllProductClickInterface {
+            void allProductItemClick(int position);
+        }
 }

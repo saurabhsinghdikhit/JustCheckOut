@@ -24,9 +24,10 @@ import java.util.ArrayList;
 
 public class MostPopularItemAdapter extends RecyclerView.Adapter<MostPopularItemAdapter.MyViewHolder>{
     private ArrayList<Product> products;
-
-    public MostPopularItemAdapter(ArrayList<Product> products) {
+    private IMostPopularInterface iMostPopularInterface;
+    public MostPopularItemAdapter(ArrayList<Product> products,IMostPopularInterface iMostPopularInterface) {
         this.products = products;
+        this.iMostPopularInterface = iMostPopularInterface;
     }
 
     @NonNull
@@ -54,6 +55,9 @@ public class MostPopularItemAdapter extends RecyclerView.Adapter<MostPopularItem
             intent.putExtra("productId", products.get(position).getId());
             actContext.startActivity(intent);
         });
+        holder.mostPopularCart.setOnClickListener(click->{
+            iMostPopularInterface.mostPopularItemClick(position);
+        });
     }
 
     @Override
@@ -62,7 +66,7 @@ public class MostPopularItemAdapter extends RecyclerView.Adapter<MostPopularItem
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgPic;
+        ImageView imgPic,mostPopularCart;
         TextView name,price;
         CardView mostPopularLayout;
         public MyViewHolder(LayoutInflater inflater, ViewGroup parent){
@@ -71,6 +75,10 @@ public class MostPopularItemAdapter extends RecyclerView.Adapter<MostPopularItem
             name = itemView.findViewById(R.id.most_popular_name);
             price = itemView.findViewById(R.id.most_popular_price);
             mostPopularLayout = itemView.findViewById(R.id.most_popular_layout);
+            mostPopularCart = itemView.findViewById(R.id.mostPopularCart);
         }
+    }
+    public interface IMostPopularInterface {
+        void mostPopularItemClick(int position);
     }
 }

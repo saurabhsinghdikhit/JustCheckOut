@@ -37,12 +37,15 @@ import com.saurabh.justcheckout.user.adapters.AllProductsAdapter;
 import com.saurabh.justcheckout.user.adapters.MostPopularItemAdapter;
 import com.saurabh.justcheckout.user.adapters.TopItemAdapter;
 import com.saurabh.justcheckout.user.authentication.AuthenticationActivity;
+import com.saurabh.justcheckout.user.classes.Cart;
 import com.saurabh.justcheckout.user.classes.Product;
 import com.saurabh.justcheckout.user.introduction.WelcomeScreen;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements TopItemAdapter.ITopItemClickInterface,AllProductsAdapter.IAllProductClickInterface,MostPopularItemAdapter.IMostPopularInterface{
     RadioButton homeRadio;
     ViewPager2 vPager;
     private RecyclerView.Adapter topItemAdapter;
@@ -116,17 +119,19 @@ public class MainActivity extends AppCompatActivity {
         });
         ((RadioButton)findViewById(R.id.radio_logout)).setOnClickListener(click->{
             FirebaseAuth.getInstance().signOut();
-            SharedPreferences sharedPreferences = getSharedPreferences("install", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getSharedPreferences("userLogin", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("name", "");
             editor.apply();
+            drawerLayout.close();
             finishAffinity();
             startActivity(new Intent(MainActivity.this,AuthenticationActivity.class));
-            drawerLayout.close();
         });
     }
 
     private void fetchMostPopularItems() {
+        allProductAdapter = new AllProductsAdapter(allProductList,this::allProductItemClick);
+        mAdapter = new MostPopularItemAdapter(mostProductList,this::mostPopularItemClick);
         FirebaseDatabase.getInstance().getReference("products")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -138,11 +143,9 @@ public class MainActivity extends AppCompatActivity {
                             allProductList.add(childNode.getValue(Product.class));
                         }
                         // most popular
-                        mAdapter = new MostPopularItemAdapter(mostProductList);
                         recyclerView.setAdapter(mAdapter);
                         mAdapter.notifyDataSetChanged();
                         // all product
-                        allProductAdapter = new AllProductsAdapter(allProductList);
                         allProductRecycler.setAdapter(allProductAdapter);
                         allProductAdapter.notifyDataSetChanged();
                     }
@@ -162,14 +165,12 @@ public class MainActivity extends AppCompatActivity {
         vPager.getChildAt(0).setOverScrollMode(RecyclerView.OVER_SCROLL_NEVER);
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         compositePageTransformer.addTransformer(new MarginPageTransformer(40));
-        compositePageTransformer.addTransformer(new ViewPager2.PageTransformer() {
-            @Override
-            public void transformPage(@NonNull View page, float position) {
-                float r = 1-Math.abs(position);
-                page.setScaleY(0.85f+r*0.15f);
-            }
+        compositePageTransformer.addTransformer((page, position) -> {
+            float r = 1-Math.abs(position);
+            page.setScaleY(0.85f+r*0.15f);
         });
         vPager.setPageTransformer(compositePageTransformer);
+        topItemAdapter = new TopItemAdapter(productList,this::topItemClick);
         FirebaseDatabase.getInstance().getReference("products").orderByChild("topPic").equalTo(true)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -178,7 +179,6 @@ public class MainActivity extends AppCompatActivity {
                         for (DataSnapshot childNode : snapshot.getChildren()) {
                             productList.add(childNode.getValue(com.saurabh.justcheckout.user.classes.Product.class));
                         }
-                        topItemAdapter = new TopItemAdapter(productList);
                         vPager.setAdapter(topItemAdapter);
                         topItemAdapter.notifyDataSetChanged();
                     }
@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity {
     private void validateUser() {
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if(currentUser == null){
+            finishAffinity();
             startActivity(new Intent(this, AuthenticationActivity.class));
-            finish();
         }else{
             SharedPreferences userData = this.getSharedPreferences("userLogin", MODE_PRIVATE);
             if(userData!=null){
@@ -202,23 +202,63 @@ public class MainActivity extends AppCompatActivity {
                 String userType = userData.getString("userType","");
                 if(name.equalsIgnoreCase(""))
                 {
+                    finishAffinity();
                     startActivity(new Intent(this, AuthenticationActivity.class));
-                    finish();
 
                 }else{
                     ((TextView)findViewById(R.id.profileName)).setText("Welcome\n"+name);
                 }
             }else{
+                finishAffinity();
                 startActivity(new Intent(this, AuthenticationActivity.class));
-                finish();
             }
         }
     }
+    private void setCartItem(ArrayList<Product> passedProductList,int position){
+        FirebaseDatabase.getInstance().getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items").orderByChild("productId").equalTo(passedProductList.get(position).getId())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.getChildrenCount()==0){
+                            // user has no cart items
+                            Cart cart = new Cart(passedProductList.get(position).getId(), 1);
+                            FirebaseDatabase.getInstance()
+                                    .getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items/"+ UUID.randomUUID().toString())
+                                    .setValue(cart).addOnSuccessListener(listener->{
+                                        Toast.makeText(getApplicationContext(),"This item has added into your cart",Toast.LENGTH_SHORT).show();
+                                    }).addOnFailureListener(failure->{
+                                        Toast.makeText(getApplicationContext(),failure.getMessage(),Toast.LENGTH_SHORT).show();
+                                    });
+                        }else{
+                            Toast.makeText(getApplicationContext(),"This item is already in cart",Toast.LENGTH_SHORT).show();
+                        }
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(MainActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
     @Override
     protected void onResume() {
         super.onResume();
         homeRadio = findViewById(R.id.radio_home);
         homeRadio.setChecked(true);
+    }
+
+    @Override
+    public void topItemClick(int position) {
+        setCartItem(productList,position);
+    }
+
+    @Override
+    public void allProductItemClick(int position) {
+        setCartItem(allProductList,position);
+    }
+
+    @Override
+    public void mostPopularItemClick(int position) {
+        setCartItem(mostProductList,position);
     }
 }

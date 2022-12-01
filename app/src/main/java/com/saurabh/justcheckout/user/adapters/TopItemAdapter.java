@@ -22,9 +22,10 @@ import java.util.ArrayList;
 
 public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.MyViewHolder>{
     private ArrayList<Product> products;
-
-    public TopItemAdapter(ArrayList<Product> products) {
+    private ITopItemClickInterface iTopItemClickInterface;
+    public TopItemAdapter(ArrayList<Product> products,ITopItemClickInterface iTopItemClickInterface) {
         this.products = products;
+        this.iTopItemClickInterface = iTopItemClickInterface;
     }
 
     @NonNull
@@ -52,6 +53,9 @@ public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.MyViewHo
             intent.putExtra("productId", products.get(position).getId());
             actContext.startActivity(intent);
         });
+        holder.topPickCart.setOnClickListener(view->{
+            iTopItemClickInterface.topItemClick(position);
+        });
     }
 
     @Override
@@ -60,7 +64,7 @@ public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.MyViewHo
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgPic;
+        ImageView imgPic,topPickCart;
         TextView name,price;
         CardView roundCardView;
         public MyViewHolder(LayoutInflater inflater, ViewGroup parent){
@@ -69,6 +73,10 @@ public class TopItemAdapter extends RecyclerView.Adapter<TopItemAdapter.MyViewHo
             name = itemView.findViewById(R.id.topPickName);
             price = itemView.findViewById(R.id.topPickPrice);
             roundCardView = itemView.findViewById(R.id.roundCardView);
+            topPickCart = itemView.findViewById(R.id.topPickCart);
         }
+    }
+    public interface ITopItemClickInterface {
+        void topItemClick(int position);
     }
 }

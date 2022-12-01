@@ -7,10 +7,36 @@
     android:padding="10dp"
     android:orientation="vertical"
     tools:context=".admin.ProductListActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="right|center"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/text_box_rounded_corner"
+        android:layout_marginBottom="15dp"
+        android:elevation="2dp">
+        <ImageView
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/userPic"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/user_icon"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:text="All Products"
+        android:layout_marginBottom="10dp"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <androidx.recyclerview.widget.RecyclerView
+            android:scrollbars="none"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/product_list_recycler_view"/>

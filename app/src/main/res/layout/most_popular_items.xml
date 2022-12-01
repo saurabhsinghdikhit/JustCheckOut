@@ -58,7 +58,7 @@
                     android:text="@string/crop_top_price"/>
                 <ImageView
                     android:layout_marginLeft="20dp"
-                    android:id="@+id/topPickSearch"
+                    android:id="@+id/mostPopularCart"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_gravity="right"

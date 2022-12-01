@@ -164,7 +164,7 @@ public class CreateProductActivity extends AppCompatActivity {
         FirebaseStorage.getInstance().getReference()
                 .child("products/"+product.getImageUrl()).getDownloadUrl()
                 .addOnSuccessListener(uri -> {
-                    Glide.with(CreateProductActivity.this).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(add_Product_Image);
+                    Glide.with(getApplicationContext()).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(add_Product_Image);
                 }).addOnFailureListener(e->{
                     Toast.makeText(CreateProductActivity.this,"Image error",Toast.LENGTH_SHORT).show();
                 });
@@ -238,6 +238,7 @@ public class CreateProductActivity extends AppCompatActivity {
                     .addOnSuccessListener(l->{
                         Toast.makeText(CreateProductActivity.this,"Product updated successfully",Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CreateProductActivity.this,ProductListActivity.class));
+                        finishAffinity();
                     }).addOnFailureListener(e->{
                         Toast.makeText(CreateProductActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                     });
@@ -270,6 +271,7 @@ public class CreateProductActivity extends AppCompatActivity {
                 .addOnSuccessListener(OnSuccessListener->{
                     Toast.makeText(CreateProductActivity.this,"Product added successfully",Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(CreateProductActivity.this,ProductListActivity.class));
+                    finishAffinity();
                 }).addOnFailureListener(OnFailureListener->{
                     Toast.makeText(CreateProductActivity.this,OnFailureListener.getMessage(),Toast.LENGTH_SHORT).show();
                 });
