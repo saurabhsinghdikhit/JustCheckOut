@@ -3,6 +3,7 @@ package com.saurabh.justcheckout.admin;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -36,7 +37,8 @@ public class ProductListActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecyclerView.Adapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
-    LinearLayout adminProductListProgressBar,add_product;
+    LinearLayout adminProductListProgressBar;
+    CardView add_product;
     ImageView userPic;
     ArrayList<Product> productList = new ArrayList<>();
     @Override

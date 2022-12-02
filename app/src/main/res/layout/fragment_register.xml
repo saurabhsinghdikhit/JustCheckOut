@@ -115,7 +115,7 @@
             android:textColor="@color/white"/>
         <LinearLayout
             android:visibility="gone"
-            android:background="@color/white"
+            android:background="@color/transparent"
             android:layout_width="match_parent"
             android:gravity="center"
             android:id="@+id/registerprogressbar"

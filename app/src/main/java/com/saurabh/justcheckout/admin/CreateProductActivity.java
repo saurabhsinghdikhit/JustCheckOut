@@ -172,27 +172,33 @@ public class CreateProductActivity extends AppCompatActivity {
     }
 
     private void validateInput() {
-        if(TextUtils.isEmpty(add_product_name.getText())){
+        if(TextUtils.isEmpty(add_product_name.getText().toString().trim())){
+            add_product_name.setText(add_product_name.getText().toString().trim());
             add_product_name.setError("Name is required");
             return;
         }
-        if(TextUtils.isEmpty(add_product_material.getText())){
+        if(TextUtils.isEmpty(add_product_material.getText().toString().trim())){
+            add_product_material.setText(add_product_material.getText().toString().trim());
             add_product_material.setError("Material is required");
             return;
         }
-        if(TextUtils.isEmpty(add_product_price.getText())){
+        if(TextUtils.isEmpty(add_product_price.getText().toString().trim())){
+            add_product_price.setText(add_product_price.getText().toString().trim());
             add_product_price.setError("Price is required");
             return;
         }
-        if(TextUtils.isEmpty(add_product_quantity.getText())){
+        if(TextUtils.isEmpty(add_product_quantity.getText().toString().trim())){
+            add_product_quantity.setText(add_product_quantity.getText().toString().trim());
             add_product_quantity.setError("Quantity is required");
             return;
         }
-        if(TextUtils.isEmpty(add_product_weight.getText())){
+        if(TextUtils.isEmpty(add_product_weight.getText().toString().trim())){
+            add_product_weight.setText(add_product_weight.getText().toString().trim());
             add_product_weight.setError("Weight is required");
             return;
         }
-        if(TextUtils.isEmpty(add_product_description.getText())){
+        if(TextUtils.isEmpty(add_product_description.getText().toString().trim())){
+            add_product_description.setText(add_product_description.getText().toString().trim());
             add_product_description.setError("Weight is required");
             return;
         }
@@ -279,13 +285,13 @@ public class CreateProductActivity extends AppCompatActivity {
     Product getProductObject(){
         return new Product(
                 UUID.randomUUID().toString(),
-                add_product_name.getText().toString(),
-                add_product_description.getText().toString(),
-                Double.parseDouble((add_product_price.getText()).toString()),
-                add_product_weight.getText()+" "+weightMeasure.getSelectedItem().toString(),
-                add_product_material.getText().toString(),
-                productCategory.getSelectedItem().toString(),
-                Integer.parseInt((add_product_quantity.getText()).toString()),
+                add_product_name.getText().toString().trim(),
+                add_product_description.getText().toString().trim(),
+                Double.parseDouble((add_product_price.getText()).toString().trim()),
+                add_product_weight.getText()+" "+weightMeasure.getSelectedItem().toString().trim(),
+                add_product_material.getText().toString().trim(),
+                productCategory.getSelectedItem().toString().trim(),
+                Integer.parseInt((add_product_quantity.getText()).toString().trim()),
                 sizes.substring(0, sizes.length() - 1),
                 Objects.equals(randomFileName, "") ?editedProduct.getImageUrl():randomFileName,
                 false);

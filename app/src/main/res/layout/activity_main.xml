@@ -11,7 +11,37 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <FrameLayout
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/menu_icon"
+                android:layout_gravity="left|center"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/menu"
+                android:contentDescription="TODO" />
+            <LinearLayout
+                android:layout_gravity="right|center"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/btn_main_cart"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/bag"
+                    android:contentDescription="TODO" />
+            </LinearLayout>
+        </FrameLayout>
         <ScrollView
+            android:layout_marginTop="60dp"
             android:overScrollMode="never"
             android:fillViewport="true"
             android:scrollbars="none"
@@ -22,36 +52,7 @@
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_height="match_parent">
-                <FrameLayout
-                    android:padding="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/menu_icon"
-                        android:layout_gravity="left|center"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:src="@drawable/menu"
-                        android:contentDescription="TODO" />
-                    <LinearLayout
-                        android:layout_gravity="right|center"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-                        <!--            <ImageView-->
-                        <!--                android:layout_width="25dp"-->
-                        <!--                android:layout_height="25dp"-->
-                        <!--                android:src="@drawable/search"/>-->
-                        <ImageView
-                            android:id="@+id/btn_main_cart"
-                            android:layout_marginLeft="20dp"
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/bag"
-                            android:contentDescription="TODO" />
-                    </LinearLayout>
-                </FrameLayout>
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

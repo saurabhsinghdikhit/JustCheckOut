@@ -7,7 +7,27 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".user.ProductDetailsActivity">
+    <FrameLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/product_detail_back_button"
+            android:layout_gravity="left|center"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_backward"
+            android:contentDescription="TODO" />
+        <ImageView
+            android:id="@+id/product_detail_cart_button"
+            android:layout_gravity="right|center"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/bag"
+            android:contentDescription="TODO" />
+    </FrameLayout>
     <ScrollView
+        android:layout_marginTop="30dp"
         android:overScrollMode="never"
         android:scrollbars="none"
         android:fillViewport="true"
@@ -21,33 +41,15 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <FrameLayout
-                    android:layout_marginTop="5dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:id="@+id/product_detail_back_button"
-                        android:layout_gravity="left|center"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_backward"
-                        android:contentDescription="TODO" />
-                    <ImageView
-                        android:id="@+id/product_detail_cart_button"
-                        android:layout_gravity="right|center"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/bag"
-                        android:contentDescription="TODO" />
-                </FrameLayout>
+
                 <androidx.cardview.widget.CardView
                     android:layout_marginTop="20dp"
                     android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     app:cardCornerRadius="20dp"
-                    android:layout_height="wrap_content">
+                    android:layout_height="350dp">
                     <ImageView
+                        android:scaleType="centerCrop"
                         android:id="@+id/product_detail_image"
                         android:background="@drawable/rounded_corner"
                         android:layout_width="match_parent"
@@ -73,7 +75,8 @@
                             android:textColor="@color/black"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="20sp"
+                            android:textSize="22sp"
+                            android:textAllCaps="true"
                             android:textStyle="bold"
                             android:text="@string/white_crop_top"/>
                         </LinearLayout>
