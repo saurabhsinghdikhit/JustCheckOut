@@ -49,7 +49,7 @@
                 android:layout_height="60dp"/>
             <EditText
                 android:maxLength="10"
-                android:inputType="number"
+                android:inputType="phone"
                 android:singleLine="true"
                 android:drawableLeft="@drawable/ic_phone"
                 android:paddingLeft="10dp"

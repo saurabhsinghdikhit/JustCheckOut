@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -37,7 +38,8 @@ public class RegisterFragment extends Fragment {
     String mobile = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]?\\d{3}[\\s.-]?\\d{4}$";
     Pattern emailPattern = Pattern.compile(email);
     Pattern mobilePattern = Pattern.compile(mobile);
-    LinearLayout registerBtn,progressBar;
+    LinearLayout progressBar;
+    Button registerBtn;
     EditText registerName, registerEmail, registerMobile, registerPassword, registerConfirmPassword;
     private FirebaseAuth mAuth;
     FirebaseDatabase firebaseDatabase;
@@ -71,7 +73,7 @@ public class RegisterFragment extends Fragment {
     }
 
     private void initializeControls(View view) {
-        registerBtn = view.findViewById(R.id.registerbtn);
+        registerBtn = view.findViewById(R.id.registerBtn);
         registerName = view.findViewById(R.id.registxtname);
         registerEmail = view.findViewById(R.id.registxtemail);
         registerMobile = view.findViewById(R.id.registxtmobile);
@@ -81,39 +83,48 @@ public class RegisterFragment extends Fragment {
     }
 
     private void validateInputs() {
-        if(TextUtils.isEmpty(registerName.getText())){
+        if(TextUtils.isEmpty(registerName.getText().toString().trim())){
+            registerName.setText(registerName.getText().toString().trim());
             registerName.setError("Name is required");
             return;
         }
-        if(TextUtils.isEmpty(registerEmail.getText())){
+        if(TextUtils.isEmpty(registerEmail.getText().toString().trim())){
+            registerEmail.setText(registerEmail.getText().toString().trim());
             registerEmail.setError("Email is required");
             return;
         }
-        if(!emailPattern.matcher(registerEmail.getText()).matches()){
+        if(!emailPattern.matcher(registerEmail.getText().toString().trim()).matches()){
+            registerEmail.setText(registerEmail.getText().toString().trim());
             registerEmail.setError("Email is not valid");
             return;
         }
-        if(TextUtils.isEmpty(registerMobile.getText())){
+        if(TextUtils.isEmpty(registerMobile.getText().toString().trim())){
+            registerMobile.setText(registerMobile.getText().toString().trim());
             registerMobile.setError("Mobile is required");
             return;
         }
-        if(!mobilePattern.matcher(registerMobile.getText()).matches()){
+        if(!mobilePattern.matcher(registerMobile.getText().toString().trim()).matches()){
+            registerMobile.setText(registerMobile.getText().toString().trim());
             registerMobile.setError("Mobile is not valid");
             return;
         }
-        if(TextUtils.isEmpty(registerPassword.getText())){
+        if(TextUtils.isEmpty(registerPassword.getText().toString().trim())){
+            registerPassword.setText(registerPassword.getText().toString().trim());
             registerPassword.setError("Password is required");
             return;
         }
-        if(registerPassword.getText().length()<6){
+        if(registerPassword.getText().toString().trim().length()<6){
+            registerPassword.setText(registerPassword.getText().toString().trim());
             registerPassword.setError("Password should be least 6 characters");
             return;
         }
-        if(TextUtils.isEmpty(registerConfirmPassword.getText())){
+        if(TextUtils.isEmpty(registerConfirmPassword.getText().toString().trim())){
+            registerConfirmPassword.setText(registerConfirmPassword.getText().toString().trim());
             registerConfirmPassword.setError("Confirm password is required");
             return;
         }
-        if(!registerPassword.getText().toString().equals(registerConfirmPassword.getText().toString())){
+        if(!registerPassword.getText().toString().trim().equals(registerConfirmPassword.getText().toString().trim())){
+            registerConfirmPassword.setText(registerConfirmPassword.getText().toString().trim());
             registerConfirmPassword.setError("Password is not matching");
             return;
         }
@@ -122,9 +133,9 @@ public class RegisterFragment extends Fragment {
     }
     void registerUser(){
         progressBar.setVisibility(View.VISIBLE);
-        User user = new User(registerEmail.getText().toString(),
-                registerMobile.getText().toString(),registerName.getText().toString(),"user");
-        mAuth.createUserWithEmailAndPassword(registerEmail.getText().toString(), registerPassword.getText().toString())
+        User user = new User(registerEmail.getText().toString().trim(),
+                registerMobile.getText().toString().trim(),registerName.getText().toString().trim(),"user");
+        mAuth.createUserWithEmailAndPassword(registerEmail.getText().toString().trim(), registerPassword.getText().toString().trim())
                 .addOnCompleteListener(getActivity(), task -> {
                     if (task.isSuccessful()) {
                         // authentication done

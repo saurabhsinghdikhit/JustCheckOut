@@ -13,8 +13,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,7 +39,9 @@ public class LoginFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private Activity activity;
-    LinearLayout progressBar,loginButton;
+    LinearLayout progressBar;
+    Button loginButton;
+    TextView txtCreateAccount;
     EditText loginEmail,loginPassword;
     String email = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
     Pattern emailPattern = Pattern.compile(email);
@@ -65,34 +69,42 @@ public class LoginFragment extends Fragment {
         loginButton = view.findViewById(R.id.loginbtn);
         loginEmail = view.findViewById(R.id.logintxtemail);
         loginPassword = view.findViewById(R.id.logintxtpassword);
-        //progressBar.setVisibility(View.VISIBLE);
-//        if(currentUser!=null){
-//            activity.startActivity(new Intent(activity, MainActivity.class));
-//            activity.finish();
-//        }else{
-//            progressBar.setVisibility(View.GONE);
-//        }
+        txtCreateAccount = view.findViewById(R.id.txtCreateAccount);
+        if(currentUser!=null){
+            activity.startActivity(new Intent(activity, MainActivity.class));
+            activity.finish();
+        }else{
+            progressBar.setVisibility(View.GONE);
+        }
         loginButton.setOnClickListener(view1 -> {
             validateInputs();
+        });
+        txtCreateAccount.setOnClickListener(click->{
+            getActivity().getSupportFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right,R.anim.slide_out_left)
+                    .replace(R.id.loginFrame,new RegisterFragment(), "findThisFragment")
+                    .commit();
         });
         return  view;
     }
     private void validateInputs() {
-        if(TextUtils.isEmpty(loginEmail.getText())){
+        if(TextUtils.isEmpty(loginEmail.getText().toString().trim())){
+            loginEmail.setText(loginEmail.getText().toString().trim());
             loginEmail.setError("Email is required");
             return;
         }
-        if(TextUtils.isEmpty(loginPassword.getText())){
+        if(!emailPattern.matcher(loginEmail.getText().toString().trim()).matches()){
+            loginEmail.setText(loginEmail.getText().toString().trim());
+            loginEmail.setError("Email is not valid");
+            return;
+        }
+        if(TextUtils.isEmpty(loginPassword.getText().toString().trim())){
+            loginPassword.setText(loginPassword.getText().toString().trim());
             loginPassword.setError("Password is required");
             return;
         }
-        if(loginPassword.getText().length()<6){
+        if(loginPassword.getText().toString().trim().length()<6){
             loginPassword.setError("Password should be least 6 characters");
-            return;
-        }
-
-        if(!emailPattern.matcher(loginEmail.getText()).matches()){
-            loginEmail.setError("Email is not valid");
+            loginPassword.setText(loginPassword.getText().toString().trim());
             return;
         }
         // if every this is clear then call the login method
@@ -101,7 +113,7 @@ public class LoginFragment extends Fragment {
 
     void loginUser(){
         progressBar.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(loginEmail.getText().toString(), loginPassword.getText().toString())
+        mAuth.signInWithEmailAndPassword(loginEmail.getText().toString().trim(), loginPassword.getText().toString().trim())
                 .addOnCompleteListener(activity, task -> {
                     if (task.isSuccessful()) {
                         // authentication successfully
