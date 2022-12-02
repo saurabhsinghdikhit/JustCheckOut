@@ -8,21 +8,27 @@
         android:orientation="vertical"
         android:layout_height="match_parent">
         <TextView
-            android:layout_marginTop="20dp"
-            android:gravity="left"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="top|center"
             android:textColor="@color/black"
-            android:textSize="25sp"
+            android:textSize="30sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Welcome Back!"
+            android:text="Great to see you back!"
             />
         <LinearLayout
             android:layout_marginBottom="100dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="80dp"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <EditText
+                android:background="@drawable/text_box_rounded_corner"
+                android:layout_margin="10dp"
+                android:elevation="6dp"
+                android:textSize="22sp"
+                android:layout_height="60dp"
                 android:maxLength="50"
                 android:singleLine="true"
                 android:drawableLeft="@drawable/ic_email"
@@ -31,37 +37,49 @@
                 android:drawablePadding="10dp"
                 android:layout_width="match_parent"
                 android:id="@+id/logintxtemail"
-                android:layout_height="50dp"/>
+                />
             <EditText
                 android:maxLength="15"
                 android:singleLine="true"
+                android:layout_margin="10dp"
+                android:elevation="6dp"
+                android:background="@drawable/text_box_rounded_corner"
                 android:drawableLeft="@drawable/ic_password"
                 android:paddingLeft="10dp"
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:drawablePadding="10dp"
+                android:textSize="22sp"
                 android:layout_width="match_parent"
                 android:id="@+id/logintxtpassword"
-                android:layout_height="50dp"/>
-<!--            <TextView-->
-<!--                android:layout_marginTop="30dp"-->
-<!--                android:id="@+id/txtforgotpassword"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="Forget Password?"-->
-<!--                android:layout_gravity="right"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="15sp"-->
-<!--                android:textColor="@color/colorAccent"/>-->
+                android:layout_height="60dp"/>
         </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
+        <Button
             android:id="@+id/loginbtn"
-            android:layout_marginBottom="30dp"
-            android:layout_gravity="bottom|right"
-            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/login"
+            android:elevation="6dp"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="70dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/radio_selected"
+            android:textColor="@color/white"/>
+        <TextView
+            android:layout_marginBottom="20dp"
+            android:id="@+id/txtCreateAccount"
             android:layout_width="wrap_content"
-            android:background="@drawable/ic_login_button"/>
+            android:layout_height="wrap_content"
+            android:text="Don't have an account? create one!"
+            android:layout_gravity="bottom|center"
+            android:layout_marginRight="10dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
         <LinearLayout
             android:visibility="gone"
             android:background="@color/white"

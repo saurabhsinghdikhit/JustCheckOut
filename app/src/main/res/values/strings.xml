@@ -21,6 +21,8 @@
     <string name="size_m">M</string>
     <string name="size_l">L</string>
     <string name="size_xl">XL</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="size_xxl">XXL</string>
     <string name="add_to_cart">Add to Cart</string>
     <string name="size">Size:</string>

@@ -7,22 +7,19 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_marginTop="20dp"
-            android:gravity="left"
-            android:textColor="@color/black"
-            android:textSize="25sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Account!"
-            />
         <LinearLayout
-            android:layout_marginBottom="100dp"
-            android:layout_marginTop="60dp"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
             <EditText
+                android:background="@drawable/text_box_rounded_corner"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:elevation="6dp"
+                android:textSize="22sp"
+                android:layout_height="60dp"
                 android:maxLength="50"
                 android:inputType="textPersonName"
                 android:singleLine="true"
@@ -31,9 +28,7 @@
                 android:hint="Name"
                 android:drawablePadding="10dp"
                 android:layout_width="match_parent"
-                android:id="@+id/registxtname"
-                android:layout_marginBottom="5dp"
-                android:layout_height="50dp"/>
+                android:id="@+id/registxtname"/>
             <EditText
                 android:maxLength="50"
                 android:inputType="textEmailAddress"
@@ -44,8 +39,14 @@
                 android:drawablePadding="10dp"
                 android:layout_width="match_parent"
                 android:id="@+id/registxtemail"
-                android:layout_marginBottom="5dp"
-                android:layout_height="50dp"/>
+                android:background="@drawable/text_box_rounded_corner"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:elevation="6dp"
+                android:textSize="22sp"
+                android:layout_height="60dp"/>
             <EditText
                 android:maxLength="10"
                 android:inputType="number"
@@ -56,8 +57,11 @@
                 android:drawablePadding="10dp"
                 android:layout_width="match_parent"
                 android:id="@+id/registxtmobile"
-                android:layout_marginBottom="5dp"
-                android:layout_height="50dp"/>
+                android:background="@drawable/text_box_rounded_corner"
+                android:layout_margin="10dp"
+                android:elevation="6dp"
+                android:textSize="22sp"
+                android:layout_height="60dp"/>
             <EditText
                 android:maxLength="15"
                 android:singleLine="true"
@@ -65,11 +69,17 @@
                 android:paddingLeft="10dp"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:layout_marginBottom="5dp"
                 android:drawablePadding="10dp"
                 android:layout_width="match_parent"
                 android:id="@+id/registxtpassword"
-                android:layout_height="50dp"/>
+                android:background="@drawable/text_box_rounded_corner"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:elevation="6dp"
+                android:textSize="22sp"
+                android:layout_height="60dp"/>
             <EditText
                 android:maxLength="15"
                 android:singleLine="true"
@@ -80,16 +90,29 @@
                 android:drawablePadding="10dp"
                 android:layout_width="match_parent"
                 android:id="@+id/registxtcpassword"
-                android:layout_height="50dp"/>
+                android:background="@drawable/text_box_rounded_corner"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="6dp"
+                android:elevation="6dp"
+                android:textSize="22sp"
+                android:layout_height="60dp"/>
         </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/registerbtn"
-            android:layout_marginBottom="30dp"
-            android:layout_gravity="bottom|right"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:background="@drawable/ic_login_button"/>
+        <Button
+            android:id="@+id/registerBtn"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="@string/register"
+            android:elevation="6dp"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/radio_selected"
+            android:textColor="@color/white"/>
         <LinearLayout
             android:visibility="gone"
             android:background="@color/white"

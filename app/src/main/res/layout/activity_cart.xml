@@ -95,13 +95,15 @@
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                         <ImageButton
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:gravity="center"
                             android:background="@drawable/radio_regular"
+                            android:contentDescription="TODO"
+                            android:gravity="center"
                             android:src="@drawable/ic_minus"
-                            android:contentDescription="TODO" />
+                            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:gravity="center"
@@ -110,22 +112,26 @@
                             android:textSize="18sp"
                             android:textColor="@color/black"
                             android:text="@string/quantity"/>
+
                         <ImageButton
-                            android:layout_marginLeft="20dp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:background="@drawable/radio_regular"
+                            android:contentDescription="TODO"
+                            android:gravity="center"
                             android:src="@drawable/ic_plus"
-                            android:contentDescription="TODO" />
+                            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
+
                     <ImageButton
-                        android:layout_gravity="right"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:contentDescription="TODO"
                         android:gravity="center"
                         android:src="@drawable/ic_multiply"
-                        android:contentDescription="TODO" />
+                        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -197,13 +203,15 @@
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
+
                         <ImageButton
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:gravity="center"
                             android:background="@drawable/radio_regular"
+                            android:contentDescription="TODO"
+                            android:gravity="center"
                             android:src="@drawable/ic_minus"
-                            android:contentDescription="TODO" />
+                            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
                         <TextView
                             android:layout_marginLeft="20dp"
                             android:gravity="center"
@@ -212,22 +220,26 @@
                             android:textSize="18sp"
                             android:textColor="@color/black"
                             android:text="@string/quantity"/>
+
                         <ImageButton
-                            android:layout_marginLeft="20dp"
                             android:layout_width="30dp"
                             android:layout_height="30dp"
-                            android:gravity="center"
+                            android:layout_marginLeft="20dp"
                             android:background="@drawable/radio_regular"
+                            android:contentDescription="TODO"
+                            android:gravity="center"
                             android:src="@drawable/ic_plus"
-                            android:contentDescription="TODO" />
+                            tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
+
                     <ImageButton
-                        android:layout_gravity="right"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:contentDescription="TODO"
                         android:gravity="center"
                         android:src="@drawable/ic_multiply"
-                        android:contentDescription="TODO" />
+                        tools:ignore="TouchTargetSizeCheck" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -347,13 +359,15 @@
                 android:text="@string/total_amount"/>
         </LinearLayout>
     </LinearLayout>
+
     <Button
         android:id="@+id/btn_checkout"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/checkout"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="5dp"
         android:background="@drawable/radio_selected"
-        android:textColor="@color/white"/>
+        android:text="@string/checkout"
+        android:textColor="@color/white"
+        tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck" />
 </LinearLayout>
