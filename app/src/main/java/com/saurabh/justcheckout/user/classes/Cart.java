@@ -4,12 +4,24 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Cart {
-    private String productId;
+    private String productId,size;
     private int quantity;
 
-    public Cart(String productId, int quantity) {
+    public void setSize(String size) {
+        this.size = size;
+    }
+    public Cart() {
+        // Default constructor required for calls to DataSnapshot.getValue(User.class)
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public Cart(String productId, int quantity, String size) {
         this.productId = productId;
         this.quantity = quantity;
+        this.size = size;
     }
 
     public void setProductId(String productId) {

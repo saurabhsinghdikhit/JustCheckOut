@@ -5,13 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,23 +23,22 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.saurabh.justcheckout.R;
-import com.saurabh.justcheckout.admin.CreateProductActivity;
 import com.saurabh.justcheckout.admin.classes.Product;
 import com.saurabh.justcheckout.user.classes.Cart;
 import com.saurabh.justcheckout.user.home.MainActivity;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.UUID;
 
 public class ProductDetailsActivity extends AppCompatActivity {
     ImageView backButton,cartButton,productImage;
     TextView productName,productPrice,productDescription,productQuantity,product_detail_material,product_detail_weight;
-    CheckBox sizeS,sizeM,sizeL,sizeXL,sizeXXL;
+    RadioButton sizeS,sizeM,sizeL,sizeXL,sizeXXL;
     Button addToCart;
     String productId;
     Product passedProduct;
-    LinearLayout productProgressBar,sizes_layout;
+    LinearLayout productProgressBar;
+    RadioGroup radioButtonGroup;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +59,10 @@ public class ProductDetailsActivity extends AppCompatActivity {
             startActivity(new Intent(ProductDetailsActivity.this,CartActivity.class));
         });
         addToCart.setOnClickListener(click->{
-            addTOCart();
+            if(radioButtonGroup.getCheckedRadioButtonId()==-1)
+                Toast.makeText(ProductDetailsActivity.this, "Please check size", Toast.LENGTH_SHORT).show();
+            else
+                addToCart();
         });
     }
 
@@ -92,11 +94,13 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productDescription.setText(product.getDescription());
         product_detail_weight.setText(": "+product.getWeight());
         String[] sizes = product.getSize().split(",");
-        for(int i = 0; i < sizes_layout.getChildCount(); i++) {
-            View v = sizes_layout.getChildAt(i);
-            if(v instanceof CheckBox) {
-                if(Arrays.asList(sizes).contains(((CheckBox) v).getText()))
-                    ((CheckBox) v).setChecked(true);
+        for(int i = 0; i < radioButtonGroup.getChildCount(); i++) {
+            View v = radioButtonGroup.getChildAt(i);
+            if(v instanceof RadioButton) {
+                if(Arrays.asList(sizes).contains(((RadioButton) v).getText()))
+                    v.setEnabled(true);
+                else
+                    v.setVisibility(View.GONE);
             }
         }
         FirebaseStorage.getInstance().getReference()
@@ -121,21 +125,23 @@ public class ProductDetailsActivity extends AppCompatActivity {
         sizeXXL = findViewById(R.id.product_detail_radio_xxl);
         addToCart = findViewById(R.id.product_detail_add_to_cart);
         productProgressBar = findViewById(R.id.productProgressBar);
-        sizes_layout = findViewById(R.id.sizes_layout);
+        radioButtonGroup = findViewById(R.id.radioButtonGroup);
         productQuantity = findViewById(R.id.product_detail_quantity);
         product_detail_material = findViewById(R.id.product_detail_material);
         product_detail_weight = findViewById(R.id.product_detail_weight);
     }
-    private void addTOCart(){
+    private void addToCart(){
         FirebaseDatabase.getInstance().getReference("carts/"+ FirebaseAuth.getInstance().getUid()+"/items").orderByChild("productId").equalTo(passedProduct.getId())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getChildrenCount()==0){
                             // user has no cart items
-                            Cart cart = new Cart(passedProduct.getId(), 1);
+                            int selectedId = radioButtonGroup.getCheckedRadioButtonId();
+                            RadioButton selectedRadioButton = (RadioButton)findViewById(selectedId);
+                            Cart cart = new Cart(passedProduct.getId(), 1,selectedRadioButton.getText().toString());
                             FirebaseDatabase.getInstance()
-                                    .getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items/"+ UUID.randomUUID().toString())
+                                    .getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items/"+ passedProduct.getId())
                                     .setValue(cart).addOnSuccessListener(listener->{
                                         Toast.makeText(getApplicationContext(),"This item has added into your cart",Toast.LENGTH_SHORT).show();
                                     }).addOnFailureListener(failure->{

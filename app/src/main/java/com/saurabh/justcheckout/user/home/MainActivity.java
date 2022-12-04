@@ -221,9 +221,11 @@ public class MainActivity extends AppCompatActivity
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getChildrenCount()==0){
                             // user has no cart items
-                            Cart cart = new Cart(passedProductList.get(position).getId(), 1);
+                            Cart cart = new Cart(passedProductList.get(position).getId(), 1,
+                                    passedProductList.get(position).getSize().split(",")[0].trim());
                             FirebaseDatabase.getInstance()
-                                    .getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items/"+ UUID.randomUUID().toString())
+                                    .getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items/")
+                                    .child(cart.getProductId())
                                     .setValue(cart).addOnSuccessListener(listener->{
                                         Toast.makeText(getApplicationContext(),"This item has added into your cart",Toast.LENGTH_SHORT).show();
                                     }).addOnFailureListener(failure->{

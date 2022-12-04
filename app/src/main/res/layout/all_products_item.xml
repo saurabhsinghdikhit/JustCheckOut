@@ -37,7 +37,7 @@
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/crop_top"
+                    android:src="@drawable/bag"
                     android:contentDescription="TODO" />
             </androidx.cardview.widget.CardView>
 

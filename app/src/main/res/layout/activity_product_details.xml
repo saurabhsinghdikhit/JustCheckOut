@@ -54,7 +54,7 @@
                         android:background="@drawable/rounded_corner"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/crop_top"
+                        android:src="@drawable/bag"
                         android:adjustViewBounds="true"
                         android:contentDescription="TODO" />
                 </androidx.cardview.widget.CardView>
@@ -81,7 +81,7 @@
                             android:text="@string/white_crop_top"/>
                         </LinearLayout>
                     <FrameLayout
-                        android:paddingTop="5dp"
+                        android:paddingTop="10dp"
                         android:layout_width="match_parent"
                         android:orientation="horizontal"
                         android:layout_height="wrap_content">
@@ -108,6 +108,7 @@
                     </FrameLayout>
 
                     <LinearLayout
+                        android:paddingTop="10dp"
                         android:id="@+id/sizes_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -119,7 +120,12 @@
                             android:layout_height="wrap_content"
                             android:text="@string/size"
                             android:textColor="@color/black"/>
-                        <CheckBox
+                        <RadioGroup
+                            android:id="@+id/radioButtonGroup"
+                            android:orientation="horizontal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+                            <RadioButton
                                 android:enabled="false"
                                 android:id="@+id/product_detail_radio_s"
                                 android:paddingTop="5dp"
@@ -132,7 +138,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/radio_button_text_color"
                                 android:text="@string/size_s"/>
-                            <CheckBox
+                            <RadioButton
                                 android:enabled="false"
                                 android:id="@+id/product_detail_radio_m"
                                 android:paddingTop="5dp"
@@ -146,7 +152,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/radio_button_text_color"
                                 android:text="@string/size_m"/>
-                            <CheckBox
+                            <RadioButton
                                 android:enabled="false"
                                 android:id="@+id/product_detail_radio_l"
                                 android:paddingTop="5dp"
@@ -160,7 +166,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/radio_button_text_color"
                                 android:text="@string/size_l"/>
-                            <CheckBox
+                            <RadioButton
                                 android:enabled="false"
                                 android:id="@+id/product_detail_radio_xl"
                                 android:paddingTop="5dp"
@@ -174,7 +180,7 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/radio_button_text_color"
                                 android:text="@string/size_xl"/>
-                            <CheckBox
+                            <RadioButton
                                 android:enabled="false"
                                 android:id="@+id/product_detail_radio_xxl"
                                 android:paddingTop="5dp"
@@ -188,10 +194,12 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/radio_button_text_color"
                                 android:text="@string/size_xxl"/>
+                        </RadioGroup>
+
                     </LinearLayout>
                     <LinearLayout
                         android:weightSum="4"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -212,7 +220,7 @@
                     </LinearLayout>
                     <LinearLayout
                         android:weightSum="4"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
@@ -234,7 +242,7 @@
                     <TextView
                         android:textColor="@color/black"
                         android:textSize="20sp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/description"/>
