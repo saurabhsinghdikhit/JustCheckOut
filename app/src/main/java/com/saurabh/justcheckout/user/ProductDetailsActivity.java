@@ -28,6 +28,7 @@ import com.saurabh.justcheckout.user.classes.Cart;
 import com.saurabh.justcheckout.user.home.MainActivity;
 
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.UUID;
 
 public class ProductDetailsActivity extends AppCompatActivity {
@@ -52,12 +53,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         else{
             fetchDataByProductId();
         }
-        backButton.setOnClickListener(click->{
-            super.onBackPressed();
-        });
-        cartButton.setOnClickListener(click->{
-            startActivity(new Intent(ProductDetailsActivity.this,CartActivity.class));
-        });
+        backButton.setOnClickListener(click-> super.onBackPressed());
+        cartButton.setOnClickListener(click-> startActivity(new Intent(ProductDetailsActivity.this,CartActivity.class)));
         addToCart.setOnClickListener(click->{
             if(radioButtonGroup.getCheckedRadioButtonId()==-1)
                 Toast.makeText(ProductDetailsActivity.this, "Please check size", Toast.LENGTH_SHORT).show();
@@ -131,15 +128,14 @@ public class ProductDetailsActivity extends AppCompatActivity {
         product_detail_weight = findViewById(R.id.product_detail_weight);
     }
     private void addToCart(){
+        int selectedId = radioButtonGroup.getCheckedRadioButtonId();
+        RadioButton selectedRadioButton = (RadioButton)findViewById(selectedId);
         FirebaseDatabase.getInstance().getReference("carts/"+ FirebaseAuth.getInstance().getUid()+"/items").orderByChild("productId").equalTo(passedProduct.getId())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Cart cart = new Cart(passedProduct.getId(), 1,selectedRadioButton.getText().toString());
                         if(snapshot.getChildrenCount()==0){
-                            // user has no cart items
-                            int selectedId = radioButtonGroup.getCheckedRadioButtonId();
-                            RadioButton selectedRadioButton = (RadioButton)findViewById(selectedId);
-                            Cart cart = new Cart(passedProduct.getId(), 1,selectedRadioButton.getText().toString());
                             FirebaseDatabase.getInstance()
                                     .getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items/"+ passedProduct.getId())
                                     .setValue(cart).addOnSuccessListener(listener->{
@@ -148,7 +144,22 @@ public class ProductDetailsActivity extends AppCompatActivity {
                                         Toast.makeText(getApplicationContext(),failure.getMessage(),Toast.LENGTH_SHORT).show();
                                     });
                         }else{
-                            Toast.makeText(getApplicationContext(),"This item is already in cart",Toast.LENGTH_SHORT).show();
+                            Cart cartItem = new Cart();
+                            for (DataSnapshot childNode : snapshot.getChildren()) {
+                                cartItem=childNode.getValue(Cart.class);
+                            }
+                            if(Objects.equals(cartItem.getSize(), selectedRadioButton.getText().toString())) {
+                                Toast.makeText(getApplicationContext(), "This item is already in cart", Toast.LENGTH_SHORT).show();
+                            }else{
+                                cart.setQuantity(cartItem.getQuantity());
+                                FirebaseDatabase.getInstance()
+                                        .getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items/"+ passedProduct.getId())
+                                        .setValue(cart).addOnSuccessListener(listener->{
+                                            Toast.makeText(getApplicationContext(),"Size has changed for this product in the cart",Toast.LENGTH_SHORT).show();
+                                        }).addOnFailureListener(failure->{
+                                            Toast.makeText(getApplicationContext(),failure.getMessage(),Toast.LENGTH_SHORT).show();
+                                        });
+                            }
                         }
                     }
 
