@@ -35,7 +35,7 @@
     <string name="after_tax_price">108.93</string>
     <string name="shipping">Shipping Price</string>
     <string name="shipping_price">20.0</string>
-    <string name="total_price">Total Amount</string>
+    <string name="total_price">Total Amount to pay</string>
     <string name="total_amount">128.93</string>
     <string name="checkout">Checkout</string>
     <string name="delivery_address">Delivery Address</string>
@@ -48,6 +48,9 @@
     <string name="place_order">Place Order</string>
     <string name="pin_text">This will make you product appear in top pick item in main screen</string>
     <string name="name">Product Name</string>
+    <string name="user_name">Name</string>
+    <string name="user_phone">Phone</string>
+    <string name="user_email">Email</string>
     <string name="description">Product description</string>
     <string name="weight">Product Weight</string>
     <string name="material">Product Material</string>
@@ -69,6 +72,20 @@
         <item>Women</item>
         <item>Men</item>
         <item>Child</item>
+    </string-array>
+    <string-array name="provinces">
+        <item>Alberta</item>
+        <item>British Columbia</item>
+        <item>New Brunswick</item>
+        <item>Newfoundland and Labrador</item>
+        <item>Northwest Territories</item>
+        <item>Nova Scotia</item>
+        <item>Nunavut</item>
+        <item>Ontario</item>
+        <item>Prince Edward Island</item>
+        <item>Quebec</item>
+        <item>Saskatchewan</item>
+        <item>Yukon</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

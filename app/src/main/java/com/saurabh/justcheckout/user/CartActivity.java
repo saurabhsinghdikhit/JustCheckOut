@@ -47,16 +47,14 @@ public class CartActivity extends AppCompatActivity {
         initializeElements();
         Button cartBtn = findViewById(R.id.btn_checkout);
         fetchCartItems();
-        cartBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if(boundedItems.size()!=0)
-                startActivity(new Intent(CartActivity.this, CheckoutActivity.class));
-                else{
-                    startActivity(new Intent(CartActivity.this, MainActivity.class));
-                    finishAffinity();
-                }
-
+        cartBtn.setOnClickListener(v -> {
+            if(boundedItems.size()!=0)
+            startActivity(new Intent(CartActivity.this, CheckoutActivity.class).putExtra("amountToPay",totalAmountToPay.getText()));
+            else{
+                startActivity(new Intent(CartActivity.this, MainActivity.class));
+                finishAffinity();
             }
+
         });
         ImageView cart_back_button = findViewById(R.id.cart_back_button);
         cart_back_button.setOnClickListener(click->{

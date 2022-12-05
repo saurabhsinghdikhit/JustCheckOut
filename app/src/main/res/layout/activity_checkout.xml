@@ -1,32 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:padding="25dp"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="25dp"
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".user.checkout.CheckoutActivity">
     <FrameLayout
-        android:layout_marginTop="5dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/checkout_back_button"
             android:layout_gravity="left|center"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:src="@drawable/ic_backward"
             android:contentDescription="TODO" />
-        <ImageView
-            android:layout_gravity="right|center"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_dots"
-            android:contentDescription="TODO" />
     </FrameLayout>
-    <FrameLayout
-        android:id="@+id/checkoutFrameLayout"
+    <ScrollView
+        android:layout_marginTop="50dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        android:fillViewport="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp" />
-</LinearLayout>
+        android:layout_marginBottom="60dp">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add personal details"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:inputType="textPersonName"
+                    android:id="@+id/checkout_name"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/user_name"/>
+                <EditText
+                    android:inputType="phone"
+                    android:id="@+id/checkout_phone"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/user_phone"/>
+                <EditText
+                    android:inputType="textEmailAddress"
+                    android:id="@+id/checkout_email"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/user_email"/>
+                <EditText
+                    android:id="@+id/checkout_street"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Street"/>
+                <EditText
+                    android:id="@+id/checkout_apartment"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Apartment no."/>
+                <EditText
+                    android:id="@+id/checkout_city"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City"/>
+                <Spinner
+                    android:id="@+id/checkout_province"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:entries="@array/provinces"/>
+                <EditText
+                    android:textColor="@color/black"
+                    android:enabled="false"
+                    android:id="@+id/checkout_country"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="CANADA"/>
+                <EditText
+                    android:maxLength="6"
+                    android:inputType="textPostalAddress"
+                    android:id="@+id/checkout_postalCode"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Postal Code"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Add card details"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <EditText
+                    android:inputType="number"
+                    android:maxLength="16"
+                    android:id="@+id/checkout_cardNumber"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Card number"/>
+                <EditText
+                    android:inputType="textPersonName"
+                    android:id="@+id/checkout_name_on_card"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Name on card"/>
+                <LinearLayout
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:inputType="number"
+                        android:maxLength="2"
+                        android:layout_weight="1"
+                        android:id="@+id/checkout_expiry_month"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Month"/>
+                    <EditText
+                        android:inputType="number"
+                        android:maxLength="4"
+                        android:paddingLeft="5dp"
+                        android:layout_weight="1"
+                        android:id="@+id/checkout_expiry_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Year"/>
+                </LinearLayout>
+                <EditText
+                    android:inputType="number"
+                    android:id="@+id/checkout_cvv"
+                    android:maxLength="3"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="CVV"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/btn_checkout"
+                android:gravity="center"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/checkout"
+                android:background="@drawable/radio_selected"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:id="@+id/amount_layout"
+        android:background="@drawable/text_box_rounded_corner"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:elevation="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+        <TextView
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/total_price"/>
+        <TextView
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:id="@+id/totalAmountToPay"
+            android:drawableTint="@color/orange"
+            android:drawableLeft="@drawable/dollar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/order_placed"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/order_placed"
+        />
+</FrameLayout>
