@@ -16,7 +16,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -41,6 +43,8 @@ import com.saurabh.justcheckout.user.classes.Cart;
 import com.saurabh.justcheckout.user.classes.Product;
 import com.saurabh.justcheckout.user.introduction.WelcomeScreen;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity
         cartBtn.setOnClickListener(view -> {
             startActivity(new Intent(MainActivity.this, CartActivity.class));
         });
+
         fetchPopularItem();
         fetchMostPopularItems();
         drawerLayout();
@@ -115,6 +120,15 @@ public class MainActivity extends AppCompatActivity
         });
         ((RadioButton)findViewById(R.id.radio_cart)).setOnClickListener(click->{
             startActivity(new Intent(MainActivity.this,CartActivity.class));
+            drawerLayout.close();
+        });
+        ((RadioButton)findViewById(R.id.radio_share)).setOnClickListener(click->{
+            String textToShare = "Just check out\nBuy newly arrived clothes from our store\nClick the link below to download the app\nhttps://saurabhsingh.ml/justcheckout";
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "Just Check Out: Clothing store");
+            intent.putExtra(Intent.EXTRA_TEXT, textToShare);
+            startActivity(Intent.createChooser(intent, "Just Check Out"));
             drawerLayout.close();
         });
         ((RadioButton)findViewById(R.id.radio_logout)).setOnClickListener(click->{
@@ -215,6 +229,10 @@ public class MainActivity extends AppCompatActivity
         }
     }
     private void setCartItem(ArrayList<Product> passedProductList,int position){
+        if(passedProductList.get(position).getQuantity()<=0){
+            Toast.makeText(getApplicationContext(),"Sorry! but this product is out of stock",Toast.LENGTH_SHORT).show();
+            return;
+        }
         FirebaseDatabase.getInstance().getReference("carts/"+FirebaseAuth.getInstance().getUid()+"/items").orderByChild("productId").equalTo(passedProductList.get(position).getId())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

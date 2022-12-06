@@ -56,6 +56,9 @@ public class ProductDetailsActivity extends AppCompatActivity {
         backButton.setOnClickListener(click-> super.onBackPressed());
         cartButton.setOnClickListener(click-> startActivity(new Intent(ProductDetailsActivity.this,CartActivity.class)));
         addToCart.setOnClickListener(click->{
+            if(passedProduct.getQuantity()<=0){
+                return;
+            }
             if(radioButtonGroup.getCheckedRadioButtonId()==-1)
                 Toast.makeText(ProductDetailsActivity.this, "Please check size", Toast.LENGTH_SHORT).show();
             else
@@ -87,7 +90,15 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productName.setText(product.getName());
         product_detail_material.setText(": "+product.getMaterial());
         productPrice.setText(product.getPrice().toString());
-        productQuantity.setText(product.getQuantity()+" items left");
+        if(product.getQuantity()>0)
+            productQuantity.setText(product.getQuantity()+" items left");
+        else{
+            addToCart.setText("Out of stock");
+            addToCart.setEnabled(false);
+            productQuantity.setText("Out of stock!");
+            productQuantity.setTextColor(getResources().getColor(R.color.red));
+        }
+
         productDescription.setText(product.getDescription());
         product_detail_weight.setText(": "+product.getWeight());
         String[] sizes = product.getSize().split(",");
