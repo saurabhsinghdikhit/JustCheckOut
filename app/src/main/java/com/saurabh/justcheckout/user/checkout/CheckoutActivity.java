@@ -27,6 +27,7 @@ import com.saurabh.justcheckout.admin.CreateProductActivity;
 import com.saurabh.justcheckout.admin.ProductListActivity;
 import com.saurabh.justcheckout.user.CartActivity;
 import com.saurabh.justcheckout.user.classes.Cart;
+import com.saurabh.justcheckout.user.classes.Product;
 import com.saurabh.justcheckout.user.home.MainActivity;
 import com.saurabh.justcheckout.user.introduction.SplashActivity;
 
@@ -34,6 +35,8 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class CheckoutActivity extends AppCompatActivity {
@@ -50,6 +53,7 @@ public class CheckoutActivity extends AppCompatActivity {
     Spinner province;
     Button btn_checkout;
     ArrayList<Cart> cartItems = new ArrayList<>();
+    ArrayList<Product> boundenProduct = new ArrayList<>();
     LinearLayout amount_layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +61,8 @@ public class CheckoutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_checkout);
         initializeControls();
         totalAmountToPay.setText(getIntent().getStringExtra("amountToPay"));
+        boundenProduct = (ArrayList<Product>) getIntent().getSerializableExtra("boundedObject");
+        cartItems = (ArrayList<Cart>) getIntent().getSerializableExtra("cartItems");
         checkout_back_button.setOnClickListener(click-> super.onBackPressed());
         btn_checkout.setOnClickListener(click-> validateUserInput());
     }
@@ -172,26 +178,17 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void checkOutForUser() {
-        getCartItems();
+        maintainInventory();
     }
-
-    private void getCartItems() {
-        cartItems.clear();
-        FirebaseDatabase.getInstance().getReference("carts/"+ FirebaseAuth.getInstance().getUid()+"/items")
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot childNode : snapshot.getChildren()) {
-                            cartItems.add(childNode.getValue(Cart.class));
-                        }
-                        addDataToRecords();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                        Toast.makeText(CheckoutActivity.this,error.getMessage(),Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private void maintainInventory() {
+        for (int i=0;i<cartItems.size();i++){
+            boundenProduct.get(i).setQuantity(boundenProduct.get(i).getQuantity()-cartItems.get(i).getQuantity());
+            FirebaseDatabase.getInstance().getReference("products/"+cartItems.get(i).getProductId())
+                    .setValue(boundenProduct.get(i)).addOnFailureListener(failure->{
+                        Toast.makeText(getApplicationContext(),"inventory update error",Toast.LENGTH_SHORT).show();
+                    });
+        }
+        addDataToRecords();
     }
 
     private void addDataToRecords() {

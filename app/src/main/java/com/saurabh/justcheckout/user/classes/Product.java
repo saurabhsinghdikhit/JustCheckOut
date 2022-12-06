@@ -2,8 +2,10 @@ package com.saurabh.justcheckout.user.classes;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.io.Serializable;
+
 @IgnoreExtraProperties
-public class Product {
+public class Product implements Serializable {
     String id,name,description,weight,material,size,imageUrl,category;
     Double price;
     int quantity;
