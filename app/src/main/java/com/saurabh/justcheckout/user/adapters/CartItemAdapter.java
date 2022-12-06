@@ -49,13 +49,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
         holder.cartItemPrice.setText(boundedProduct.get(position).getPrice().toString());
         holder.cartItemSize.setText(cartProducts.get(position).getSize());
         holder.cartItemQuantity.setText(String.valueOf(cartProducts.get(position).getQuantity()));
-        FirebaseStorage.getInstance().getReference()
-                .child("products/"+boundedProduct.get(position).getImageUrl()).getDownloadUrl()
-                .addOnSuccessListener(uri -> {
-                    Glide.with(actContext).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(holder.cartItemImage);
-                }).addOnFailureListener(e->{
-                    Toast.makeText(actContext,"Image error",Toast.LENGTH_SHORT).show();
-                });
+        Glide.with(actContext).load(boundedProduct.get(position).getImageUrl()).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(holder.cartItemImage);
         holder.cartItemAdd.setOnClickListener(click->{
             if(cartProducts.get(position).getQuantity()+1<=boundedProduct.get(position).getQuantity()){
                 Cart newCart = cartProducts.get(position);

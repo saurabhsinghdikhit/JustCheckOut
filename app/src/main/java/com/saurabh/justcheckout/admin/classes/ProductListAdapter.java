@@ -43,13 +43,7 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         String image = products.get(position).getImageUrl();
         Context actContext = holder.itemView.getContext();
         builder = new AlertDialog.Builder(actContext);
-        FirebaseStorage.getInstance().getReference()
-                .child("products/"+image).getDownloadUrl()
-                .addOnSuccessListener(uri -> {
-                    Glide.with(actContext).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(holder.imgPic);
-                }).addOnFailureListener(e->{
-                    Toast.makeText(actContext,"Image error",Toast.LENGTH_SHORT).show();
-                });
+        Glide.with(actContext).load(image).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(holder.imgPic);
         holder.name.setText(products.get(position).getName().toUpperCase());
         holder.size.setText(products.get(position).getSize());
         holder.product_list_price.setText(products.get(position).getPrice().toString());

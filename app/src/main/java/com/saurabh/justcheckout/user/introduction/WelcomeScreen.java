@@ -21,7 +21,6 @@ import java.util.ArrayList;
 public class WelcomeScreen extends AppCompatActivity {
     ViewPager2 vPager;
     Button welcomeBtn;
-    private RecyclerView.Adapter welcomeScreenAdapter;
     ArrayList<String> imageList = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +31,7 @@ public class WelcomeScreen extends AppCompatActivity {
         imageList.add("welcome3");
         vPager = findViewById(R.id.welcome_view_pager);
         welcomeBtn = findViewById(R.id.welcomeButton);
-        welcomeScreenAdapter = new WelcomeScreenAdapter(imageList);
+        RecyclerView.Adapter welcomeScreenAdapter = new WelcomeScreenAdapter(imageList);
         vPager.setAdapter(welcomeScreenAdapter);
         // setting animation for viewing viewpager as motion layout
         vPager.setClipToPadding(false);

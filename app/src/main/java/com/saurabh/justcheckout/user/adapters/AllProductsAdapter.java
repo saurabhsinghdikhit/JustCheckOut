@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.MyViewHolder>{
     private final ArrayList<Product> products;
-    private IAllProductClickInterface iAllProductClickInterface;
+    private final IAllProductClickInterface iAllProductClickInterface;
     public AllProductsAdapter(ArrayList<Product> products,IAllProductClickInterface iAllProductClickInterface) {
         this.products = products;
         this.iAllProductClickInterface = iAllProductClickInterface;
@@ -45,13 +45,7 @@ public class AllProductsAdapter extends RecyclerView.Adapter<AllProductsAdapter.
 
         String image = products.get(position).getImageUrl();
         Context actContext = holder.itemView.getContext();
-        FirebaseStorage.getInstance().getReference()
-                .child("products/"+image).getDownloadUrl()
-                .addOnSuccessListener(uri -> {
-                    Glide.with(actContext).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(holder.imgPic);
-                }).addOnFailureListener(e->{
-                    Toast.makeText(actContext,"Image error",Toast.LENGTH_SHORT).show();
-                });
+        Glide.with(actContext).load(image).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(holder.imgPic);
         holder.name.setText(products.get(position).getName().toUpperCase());
         holder.size.setText(products.get(position).getSize());
         holder.product_list_price.setText(products.get(position).getPrice().toString());

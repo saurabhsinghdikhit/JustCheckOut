@@ -73,7 +73,7 @@ public class CreateProductActivity extends AppCompatActivity {
     // Permissions for accessing the storage
     private static final int PICK_IMAGE_REQUEST = 9544;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
-    private static String[] PERMISSIONS_STORAGE = {
+    private final static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
@@ -161,13 +161,7 @@ public class CreateProductActivity extends AppCompatActivity {
                     ((CheckBox) v).setChecked(true);
             }
         }
-        FirebaseStorage.getInstance().getReference()
-                .child("products/"+product.getImageUrl()).getDownloadUrl()
-                .addOnSuccessListener(uri -> {
-                    Glide.with(getApplicationContext()).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(add_Product_Image);
-                }).addOnFailureListener(e->{
-                    Toast.makeText(CreateProductActivity.this,"Image error",Toast.LENGTH_SHORT).show();
-                });
+        Glide.with(getApplicationContext()).load(product.getImageUrl()).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(add_Product_Image);
         add_product_button.setText(R.string.edit_product);
     }
 
@@ -259,8 +253,11 @@ public class CreateProductActivity extends AppCompatActivity {
         StorageReference reference = FirebaseStorage.getInstance().getReference().child("products/"+randomFileName);
         reference.putFile(selectedImage)
                 .addOnSuccessListener(taskSnapshot -> {
-                    progressDialog.dismiss();
-                    addProduct();
+                    reference.getDownloadUrl().addOnSuccessListener(uri -> {
+                        progressDialog.dismiss();
+                        addProduct(uri.toString());
+                    });
+
                 })
                 .addOnFailureListener(e -> {// Error, Image not uploaded
                     progressDialog.dismiss();
@@ -271,8 +268,9 @@ public class CreateProductActivity extends AppCompatActivity {
                     progressDialog.setMessage("Uploaded " + (int)progress + "%");
                 });
     }
-    private void addProduct(){
+    private void addProduct(String imageUrl){
         Product product = getProductObject();
+        product.setImageUrl(imageUrl);
         FirebaseDatabase.getInstance().getReference("products").child(product.getId()).setValue(product)
                 .addOnSuccessListener(OnSuccessListener->{
                     Toast.makeText(CreateProductActivity.this,"Product added successfully",Toast.LENGTH_SHORT).show();

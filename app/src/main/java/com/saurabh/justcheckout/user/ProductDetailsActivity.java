@@ -87,7 +87,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         productName.setText(product.getName());
         product_detail_material.setText(": "+product.getMaterial());
         productPrice.setText(product.getPrice().toString());
-        productQuantity.setText(String.valueOf(product.getQuantity())+" items left");
+        productQuantity.setText(product.getQuantity()+" items left");
         productDescription.setText(product.getDescription());
         product_detail_weight.setText(": "+product.getWeight());
         String[] sizes = product.getSize().split(",");
@@ -100,13 +100,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
                     v.setVisibility(View.GONE);
             }
         }
-        FirebaseStorage.getInstance().getReference()
-                .child("products/"+product.getImageUrl()).getDownloadUrl()
-                .addOnSuccessListener(uri -> {
-                    Glide.with(getApplicationContext()).load(uri).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(productImage);
-                }).addOnFailureListener(e->{
-                    Toast.makeText(ProductDetailsActivity.this,"Image error",Toast.LENGTH_SHORT).show();
-                });
+        Glide.with(getApplicationContext()).load(passedProduct.getImageUrl()).placeholder(R.drawable.bag).error(R.drawable.just_check_out).into(productImage);
     }
     private void initializeTheControls() {
         backButton = findViewById(R.id.product_detail_back_button);

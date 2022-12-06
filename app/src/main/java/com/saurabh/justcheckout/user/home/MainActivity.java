@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         drawerLayout = findViewById(R.id.drawerLayout);
         content = findViewById(R.id.content);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open, R.string.close) {
-            float scaleFactor = 5f;
+           final float scaleFactor = 5f;
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
@@ -130,8 +130,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void fetchMostPopularItems() {
-        allProductAdapter = new AllProductsAdapter(allProductList,this::allProductItemClick);
-        mAdapter = new MostPopularItemAdapter(mostProductList,this::mostPopularItemClick);
+        allProductAdapter = new AllProductsAdapter(allProductList, this);
+        mAdapter = new MostPopularItemAdapter(mostProductList, this);
         FirebaseDatabase.getInstance().getReference("products")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
             page.setScaleY(0.85f+r*0.15f);
         });
         vPager.setPageTransformer(compositePageTransformer);
-        topItemAdapter = new TopItemAdapter(productList,this::topItemClick);
+        topItemAdapter = new TopItemAdapter(productList, this);
         FirebaseDatabase.getInstance().getReference("products").orderByChild("topPic").equalTo(true)
                 .addValueEventListener(new ValueEventListener() {
                     @Override
