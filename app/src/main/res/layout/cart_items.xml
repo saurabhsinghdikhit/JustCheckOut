@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
         <androidx.cardview.widget.CardView
+            android:id="@+id/cartItemHolder"
             android:layout_width="180dp"
             android:elevation="4dp"
             android:layout_height="180dp"

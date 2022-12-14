@@ -16,6 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JustCheckOut"
         android:usesCleartextTraffic="true"
+        android:windowSoftInputMode="stateHidden|adjustResize"
         tools:targetApi="25">
         <activity
             android:name=".admin.ProductListActivity"

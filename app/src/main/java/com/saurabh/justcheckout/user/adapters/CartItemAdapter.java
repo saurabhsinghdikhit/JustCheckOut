@@ -95,6 +95,11 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
                     });
             builder.create().show();
         });
+        holder.cartItemHolder.setOnClickListener(view -> {
+            Intent intent = new Intent(actContext, ProductDetailsActivity.class);
+            intent.putExtra("productId", boundedProduct.get(position).getId());
+            actContext.startActivity(intent);
+        });
     }
     @Override
     public int getItemCount() {
@@ -104,7 +109,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
         ImageView cartItemImage;
         TextView cartItemPrice,cartItemSize,cartItemName,cartItemQuantity;
         ImageButton cartItemMinus,cartItemAdd,cartItemRemove;
-
+        CardView cartItemHolder;
         public MyViewHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.cart_items, parent, false));
             cartItemImage = itemView.findViewById(R.id.cartItemImage);
@@ -115,6 +120,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.MyView
             cartItemAdd = itemView.findViewById(R.id.cartItemAdd);
             cartItemQuantity = itemView.findViewById(R.id.cartItemQuantity);
             cartItemRemove = itemView.findViewById(R.id.cartItemRemove);
+            cartItemHolder = itemView.findViewById(R.id.cartItemHolder);
         }
     }
 }

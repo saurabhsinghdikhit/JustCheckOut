@@ -3,11 +3,18 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
         <LinearLayout
+            android:layout_marginBottom="100dp"
             android:layout_width="match_parent"
             android:orientation="vertical"
             android:layout_height="wrap_content">
@@ -110,12 +117,12 @@
             android:textSize="20sp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/radio_selected"
             android:textColor="@color/white"/>
         <LinearLayout
             android:visibility="gone"
-            android:background="@color/transparent"
+            android:background="#ECE1F4"
             android:layout_width="match_parent"
             android:gravity="center"
             android:id="@+id/registerprogressbar"
@@ -128,9 +135,5 @@
         </LinearLayout>
 
     </FrameLayout>
-
-
-
-
-
+    </ScrollView>
 </LinearLayout>

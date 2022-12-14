@@ -35,7 +35,7 @@ public class CartActivity extends AppCompatActivity {
     ImageView cart_back_button,cartEmpty;
     Button btn_checkout;
     TextView totalAmountToPay,subTotal,taxes,priceWithTaxes,shippingCharges;
-    LinearLayout price_layout;
+    LinearLayout price_layout,cartCalculation;
     RecyclerView recyclerViewCartItems;
     RecyclerView.Adapter cartAdapter;
     ArrayList<Cart> cartItems = new ArrayList<>();
@@ -133,6 +133,8 @@ public class CartActivity extends AppCompatActivity {
             this.btn_checkout.setText("Continue Shopping!");
             this.price_layout.setVisibility(View.GONE);
             this.cartEmpty.setVisibility(View.VISIBLE);
+        }else{
+            this.cartCalculation.setVisibility(View.VISIBLE);
         }
     }
 
@@ -147,5 +149,6 @@ public class CartActivity extends AppCompatActivity {
         shippingCharges = findViewById(R.id.shippingCharges);
         totalAmountToPay = findViewById(R.id.totalAmountToPay);
         recyclerViewCartItems = findViewById(R.id.recyclerViewCartItems);
+        cartCalculation = findViewById(R.id.cartCalculation);
     }
 }

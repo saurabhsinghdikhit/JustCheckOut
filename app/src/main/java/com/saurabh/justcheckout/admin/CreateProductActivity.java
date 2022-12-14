@@ -292,7 +292,7 @@ public class CreateProductActivity extends AppCompatActivity {
                 Integer.parseInt((add_product_quantity.getText()).toString().trim()),
                 sizes.substring(0, sizes.length() - 1),
                 Objects.equals(randomFileName, "") ?editedProduct.getImageUrl():randomFileName,
-                false);
+                isEditFlow && editedProduct.getTopPic());
     }
 
     void addProductImage(){

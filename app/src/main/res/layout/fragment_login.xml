@@ -3,6 +3,12 @@
     android:orientation="vertical"
     android:focusableInTouchMode="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
+    <ScrollView
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
@@ -11,14 +17,14 @@
             android:layout_marginTop="30dp"
             android:layout_gravity="top|center"
             android:textColor="@color/black"
-            android:textSize="30sp"
+            android:textSize="23sp"
             android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Great to see you back!"
             />
         <LinearLayout
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="140dp"
             android:layout_marginTop="80dp"
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -70,7 +76,7 @@
             android:background="@drawable/radio_selected"
             android:textColor="@color/white"/>
         <TextView
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="25dp"
             android:id="@+id/txtCreateAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,11 +84,11 @@
             android:layout_gravity="bottom|center"
             android:layout_marginRight="10dp"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/black"/>
         <LinearLayout
             android:visibility="gone"
-            android:background="@color/transparent"
+            android:background="#ECE1F4"
             android:layout_width="match_parent"
             android:gravity="center"
             android:id="@+id/loginprogressbar"
@@ -94,4 +100,5 @@
                 />
         </LinearLayout>
     </FrameLayout>
+    </ScrollView>
 </LinearLayout>

@@ -39,6 +39,8 @@
         </LinearLayout>
     </ScrollView>
     <LinearLayout
+        android:id="@+id/cartCalculation"
+        android:visibility="gone"
         android:layout_gravity="bottom"
         android:orientation="vertical"
         android:layout_width="match_parent"

@@ -6,63 +6,71 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".user.introduction.WelcomeScreen">
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:layout_marginTop="50dp"
-        android:padding="10dp"
-        android:id="@+id/welcome_view_pager"
+    <ScrollView
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:overScrollMode="never"
         android:layout_width="match_parent"
-        android:paddingStart="80dp"
-        android:paddingEnd="80dp"
-        android:layout_height="500dp"
-        android:layout_marginBottom="50dp"/>
-    <FrameLayout
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:textSize="20sp"
+        android:layout_height="match_parent">
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_marginTop="50dp"
+            android:padding="10dp"
+            android:id="@+id/welcome_view_pager"
+            android:layout_width="match_parent"
+            android:paddingStart="80dp"
+            android:paddingEnd="80dp"
+            android:layout_height="500dp"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="@string/tops"/>
-            <TextView
-                android:textSize="20sp"
+                android:orientation="vertical">
+                <TextView
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/tops"/>
+                <TextView
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/tees"/>
+                <TextView
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/hoodies"/>
+                <TextView
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:text="@string/category"/>
+            </LinearLayout>
+            <Button
+                android:id="@+id/welcomeButton"
+                android:layout_gravity="bottom|end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="@string/tees"/>
-            <TextView
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="@string/hoodies"/>
-            <TextView
-                android:textSize="20sp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:text="@string/category"/>
-        </LinearLayout>
-        <Button
-            android:id="@+id/welcomeButton"
-            android:layout_gravity="bottom|end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="50dp"
-            android:paddingRight="50dp"
-            android:drawableEnd="@drawable/ic_forward"
-            android:drawableTint="@color/white"
-            android:drawablePadding="10dp"
-            android:text="@string/next"
-            android:background="@drawable/skip_button_background"
-            android:textColor="@color/white"/>
-    </FrameLayout>
-
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:drawableEnd="@drawable/ic_forward"
+                android:drawableTint="@color/white"
+                android:drawablePadding="10dp"
+                android:text="@string/next"
+                android:background="@drawable/skip_button_background"
+                android:textColor="@color/white"/>
+        </FrameLayout>
+    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>
