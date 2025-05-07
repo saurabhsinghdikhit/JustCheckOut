@@ -19,6 +19,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -136,38 +139,41 @@ public class RegisterFragment extends Fragment {
         User user = new User(registerEmail.getText().toString().trim(),
                 registerMobile.getText().toString().trim(),registerName.getText().toString().trim(),"user");
         mAuth.createUserWithEmailAndPassword(registerEmail.getText().toString().trim(), registerPassword.getText().toString().trim())
-                .addOnCompleteListener(getActivity(), task -> {
-                    if (task.isSuccessful()) {
-                        // authentication done
-                        FirebaseUser userLogin = mAuth.getCurrentUser();
-                        databaseReference.child(userLogin.getUid()).setValue(user);
-                        databaseReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Log.i("added","user added");
-                                progressBar.setVisibility(View.GONE);
-                                SharedPreferences sharedPreferences = activity.getSharedPreferences("userLogin", MODE_PRIVATE);
-                                SharedPreferences.Editor myUser = sharedPreferences.edit();
-                                myUser.putString("name", user.getName());
-                                myUser.putString("phone", user.getPhone());
-                                myUser.putString("email", user.getEmail());
-                                myUser.putString("userType", user.getUserType());
-                                myUser.apply();
-                                activity.startActivity(new Intent(activity,MainActivity.class));
-                                activity.finish();
-                            }
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                progressBar.setVisibility(View.GONE);
-                                // displaying a failure message on below line.
-                                Toast.makeText(activity, error.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        // auth failed
-                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), Objects.requireNonNull(task.getException()).getMessage(),
-                            Toast.LENGTH_SHORT).show();
+                .addOnCompleteListener(getActivity(),new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // authentication done
+                            FirebaseUser userLogin = mAuth.getCurrentUser();
+                            databaseReference.child(userLogin.getUid()).setValue(user);
+                            databaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Log.i("added","user added");
+                                    progressBar.setVisibility(View.GONE);
+                                    SharedPreferences sharedPreferences = activity.getSharedPreferences("userLogin", MODE_PRIVATE);
+                                    SharedPreferences.Editor myUser = sharedPreferences.edit();
+                                    myUser.putString("name", user.getName());
+                                    myUser.putString("phone", user.getPhone());
+                                    myUser.putString("email", user.getEmail());
+                                    myUser.putString("userType", user.getUserType());
+                                    myUser.apply();
+                                    activity.startActivity(new Intent(activity,MainActivity.class));
+                                    activity.finish();
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    progressBar.setVisibility(View.GONE);
+                                    // displaying a failure message on below line.
+                                    Toast.makeText(activity, error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            // auth failed
+                            progressBar.setVisibility(View.GONE);
+                            Toast.makeText(getActivity(), Objects.requireNonNull(task.getException()).getMessage(),
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
     }

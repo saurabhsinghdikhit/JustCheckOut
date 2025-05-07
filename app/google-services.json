@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "932294441861",
+    "project_id": "justcheckout-6408f",
+    "storage_bucket": "justcheckout-6408f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932294441861:android:8224f4a3f9f9f0c96562ec",
+        "android_client_info": {
+          "package_name": "com.saurabh.justcheckout"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932294441861-s9kv5p0otg559m8k39o6ee0s9ps1f7fs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAcZgjIHRQOVXj9YEXY5E-0mvr5r3WKtQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932294441861-s9kv5p0otg559m8k39o6ee0s9ps1f7fs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
